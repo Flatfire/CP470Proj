@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.judypraught.healthyhawk">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.HealthyHawk">
+        <activity
+            android:name=".Book_Facilities"
+            android:exported="true"
+            android:parentActivityName=".Home_Screen"/>
+        <activity
+            android:name=".Weight_Log"
+            android:exported="true"
+            android:parentActivityName=".Home_Screen"/>
+        <activity
+            android:name=".Exercise_Log"
+            android:exported="true"
+            android:parentActivityName=".Home_Screen" />
+        <activity
+            android:name=".Profile_Creator"
+            android:exported="true"
+            android:parentActivityName=".Login_Screen" />
+        <activity
+            android:name=".Login_Screen"
+            android:exported="true"
+            android:parentActivityName=".Home_Screen"
+            />
+        <activity
+            android:name=".Home_Screen"
+            android:exported="true">
+            <intent-filter>
+
+
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

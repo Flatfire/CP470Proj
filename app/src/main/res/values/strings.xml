@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Healthy Hawk</string>
+    <string name="LoginTitle">Login</string>
+    <string name="ExerciseLogTitle">Exercise Log</string>
+    <string name="BookFacilitiesTitle">Book Facilities</string>
+    <string name="WeightLogTitle">Weight Log</string>
+    <string name="DefaultLogin">StudentName@mylaurier.ca</string>
+    <string name="PasswordTitle">Password</string>
+    <string name="PasswordTitleReEnter">Re-enter Password</string>
+    <string name="RegisterButton">Register</string>
+    <string name="LoginButton">Login</string>
+    <string name="Enter_Email">Please Enter Email</string>
+    <string name="ExerciseLogButton">Exercise Log</string>
+    <string name="WeightLogButton">Weight Log</string>
+    <string name="BookFacilitiesButton">Book Facilities</string>
+    <string name="LoginToBook">Login To Book</string>
+
+
+</resources>
