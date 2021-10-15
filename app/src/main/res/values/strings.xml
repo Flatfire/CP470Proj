@@ -27,6 +27,7 @@
     <string name="LabelWeight">Weight</string>
     <string name="HintWeight">xx</string>
     <string name="LabelWeightUnit">Unit</string>
+    <string name="ButtonSave">Save</string>
 
 
 </resources>

@@ -14,6 +14,7 @@ public class Home_Screen extends AppCompatActivity {
     LinearLayout layoutHomePage;
     LinearLayout layoutHomeNavigation;
     LinearLayout layoutUserIntroduction;
+    Button buttonSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +33,18 @@ public class Home_Screen extends AppCompatActivity {
         layoutHomePage = findViewById(R.id.layoutHomePage);
         layoutHomeNavigation = findViewById(R.id.layoutHomeNavigation);
         layoutUserIntroduction = findViewById(R.id.layoutUserIntroduction);
+        buttonSave = findViewById(R.id.buttonSave);
 
         if (is_registered) {
             layoutHomePage.setVisibility(View.VISIBLE);
             layoutHomeNavigation.setVisibility(View.VISIBLE);
-            layoutUserIntroduction.setVisibility(View.INVISIBLE);
+            layoutUserIntroduction.setVisibility(View.GONE);
+            buttonSave.setVisibility(View.GONE);
         } else {
             layoutHomePage.setVisibility(View.INVISIBLE);
             layoutHomeNavigation.setVisibility(View.GONE);
             layoutUserIntroduction.setVisibility(View.VISIBLE);
+            buttonSave.setVisibility(View.VISIBLE);
         }
 
 
