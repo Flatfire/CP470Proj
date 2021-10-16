@@ -145,6 +145,7 @@ public class User_Introduction extends AppCompatActivity {
             String key_weight = getString(R.string.preference_key_weight);
             String key_height_unit = getString(R.string.preference_key_height_unit);
             String key_weight_unit = getString(R.string.preference_key_weight_unit);
+            String key_is_registered = getString(R.string.preference_key_is_registered);
 
             mEditor.putString(key_nickname, nickname);
             mEditor.putString(key_age, String.valueOf(age));
@@ -153,6 +154,7 @@ public class User_Introduction extends AppCompatActivity {
             mEditor.putString(key_weight, String.valueOf(weight));
             mEditor.putString(key_height_unit, heightUnit);
             mEditor.putString(key_weight_unit, weightUnit);
+            mEditor.putBoolean(key_is_registered, true);
 
             if (mEditor.commit() == false) {
                 String commit_failed = getString(R.string.commit_preferences_failed);

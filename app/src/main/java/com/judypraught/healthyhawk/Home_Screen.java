@@ -49,9 +49,12 @@ public class Home_Screen extends AppCompatActivity {
         String key_is_registered = getString(R.string.preference_key_is_registered);
         boolean is_registered = mPrefs.getBoolean(key_is_registered, false);
 
+        // Either launch the User Introduction or load the data for Home Page
         if (!is_registered) {
             Intent intent = new Intent(Home_Screen.this, User_Introduction.class);
             startActivityForResult(intent, LAUNCH_USER_INTRODUCTION);
+        } else {
+            populateHomeScreen();
         }
 
         // Setup Home Screen Navigation
