@@ -10,13 +10,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HealthyHawk">
         <activity
+            android:name=".User_Introduction"
+            android:exported="true"
+            android:parentActivityName=".Home_Screen" />
+        <activity
             android:name=".Book_Facilities"
             android:exported="true"
-            android:parentActivityName=".Home_Screen"/>
+            android:parentActivityName=".Home_Screen" />
         <activity
             android:name=".Weight_Log"
             android:exported="true"
-            android:parentActivityName=".Home_Screen"/>
+            android:parentActivityName=".Home_Screen" />
         <activity
             android:name=".Exercise_Log"
             android:exported="true"
@@ -28,14 +32,11 @@
         <activity
             android:name=".Login_Screen"
             android:exported="true"
-            android:parentActivityName=".Home_Screen"
-            />
+            android:parentActivityName=".Home_Screen" />
         <activity
             android:name=".Home_Screen"
             android:exported="true">
             <intent-filter>
-
-
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />

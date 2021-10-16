@@ -14,8 +14,6 @@
     <string name="WeightLogButton">Weight Log</string>
     <string name="BookFacilitiesButton">Book Facilities</string>
     <string name="LoginToBook">Login To Book</string>
-    <string name="preference_file_name">CP470-app-preferences</string>
-    <string name="preference_key_is_registered">bool-is-registered</string>
     <string name="LabelNickname">Nickname</string>
     <string name="HintNickname">Your Name</string>
     <string name="LabelAge">Age</string>
@@ -28,6 +26,31 @@
     <string name="HintWeight">xx</string>
     <string name="LabelWeightUnit">Unit</string>
     <string name="ButtonSave">Save</string>
+    <string name="successful_registration">Your info has been saved!</string>
+    <string name="commit_preferences_failed">Failed to save. Try again.</string>
 
+    <string-array name="Genders">
+        <item>Woman</item>
+        <item>Man</item>
+        <item>Non-binary/non-conforming</item>
+        <item>Prefer not to say</item>
+    </string-array>
+    <string-array name="HeightUnits">
+        <item>Centimetres (cm)</item>
+        <item>Inches</item>
+    </string-array>
+    <string-array name="WeightUnits">
+        <item>Kilograms (kg)</item>
+        <item>Pounds (lb)</item>
+    </string-array>
 
+    <string name="preference_file_name">CP470_app_preferences</string>
+    <string name="preference_key_is_registered">bool_is_registered</string>
+    <string name="preference_key_nickname">user_nickname</string>
+    <string name="preference_key_age">user_age</string>
+    <string name="preference_key_gender">user_gender</string>
+    <string name="preference_key_height">user_height</string>
+    <string name="preference_key_height_unit">user_height_unit</string>
+    <string name="preference_key_weight">user_weight</string>
+    <string name="preference_key_weight_unit">user_weight_unit</string>
 </resources>
