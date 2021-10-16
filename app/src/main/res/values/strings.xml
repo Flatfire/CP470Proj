@@ -19,6 +19,7 @@
     <string name="LabelAge">Age</string>
     <string name="HintAge">xx</string>
     <string name="LabelGender">Gender</string>
+    <string name="HintGender">Man, Woman, Non-binary, Prefer not to say</string>
     <string name="LabelHeight">Height</string>
     <string name="HintHeight">xx</string>
     <string name="LabelHeightUnit">Unit</string>

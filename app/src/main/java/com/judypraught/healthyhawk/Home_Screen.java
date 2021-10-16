@@ -1,12 +1,15 @@
 package com.judypraught.healthyhawk;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class Home_Screen extends AppCompatActivity {
     // Constants
@@ -18,6 +21,11 @@ public class Home_Screen extends AppCompatActivity {
     // Variables
     LinearLayout layoutHomePage;
     LinearLayout layoutHomeNavigation;
+    TextView textAge;
+    TextView textGender;
+    TextView textHeight;
+    TextView textNickname;
+    TextView textWeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +35,11 @@ public class Home_Screen extends AppCompatActivity {
         // Initialize variables
         layoutHomePage = findViewById(R.id.layoutHomePage);
         layoutHomeNavigation = findViewById(R.id.layoutHomeNavigation);
-
+        textAge = findViewById(R.id.textHomeAge);
+        textGender = findViewById(R.id.textHomeGender);
+        textHeight = findViewById(R.id.textHomeHeight);
+        textNickname = findViewById(R.id.textHomeNickname);
+        textWeight = findViewById(R.id.textHomeWeight);
 
         // Check if User Data exists otherwise launch User Introduction Activity
 
@@ -61,5 +73,47 @@ public class Home_Screen extends AppCompatActivity {
             Intent intent = new Intent(Home_Screen.this, Book_Facilities.class);
             startActivityForResult(intent, LAUNCH_BOOK_FACILITIES);
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == LAUNCH_USER_INTRODUCTION) {
+            if (resultCode == Activity.RESULT_OK) {
+                populateHomeScreen();
+            }
+        }
+    }
+
+    private void populateHomeScreen() {
+        String preference_file_name = getString(R.string.preference_file_name);
+        SharedPreferences mPrefs = getSharedPreferences(preference_file_name, MODE_PRIVATE);
+
+        String key_nickname = getString(R.string.preference_key_nickname);
+        textNickname.setText(mPrefs.getString(key_nickname, ""));
+
+        String key_age = getString(R.string.preference_key_age);
+        textAge.setText(mPrefs.getString(key_age, "0"));
+
+        // Show gender if not "Prefer not to say"
+        String key_gender = getString(R.string.preference_key_gender);
+        if (mPrefs.getString(key_gender, "Prefer not to say").compareTo("Prefer not to say")
+                != 0) {
+            textGender.setText(mPrefs.getString(key_gender, ""));
+        }
+
+        String key_height = getString(R.string.preference_key_height);
+        String key_height_unit = getString(R.string.preference_key_height_unit);
+        String height = mPrefs.getString(key_height, "0")
+                + " "
+                + mPrefs.getString(key_height_unit, "");
+        textHeight.setText(height);
+
+        String key_weight = getString(R.string.preference_key_weight);
+        String key_weight_unit = getString(R.string.preference_key_weight_unit);
+        String weight = mPrefs.getString(key_weight, "0")
+                + " "
+                + mPrefs.getString(key_weight_unit, "");
+        textWeight.setText(weight);
     }
 }
