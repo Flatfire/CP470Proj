@@ -45,7 +45,8 @@
         <item>Pounds (lb)</item>
     </string-array>
 
-    <string name="preference_file_name">CP470_app_preferences</string>
+    <!--SharedPreferences File Variables-->
+    <string name="preference_file_name">healthyhawk_app_preferences</string>
     <string name="preference_key_is_registered">bool_is_registered</string>
     <string name="preference_key_nickname">user_nickname</string>
     <string name="preference_key_age">user_age</string>

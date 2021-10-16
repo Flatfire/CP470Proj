@@ -15,38 +15,46 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/layoutHomeNavigation"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textHomeNickname"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/HintNickname"/>
+            android:layout_height="40dp"
+            android:text="@string/HintNickname"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:translationY="15dp" />
 
         <TextView
             android:id="@+id/textHomeAge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/HintAge"/>
+            android:text="@string/HintAge"
+            android:translationY="15dp" />
 
         <TextView
             android:id="@+id/textHomeGender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/HintGender"/>
+            android:text="@string/HintGender"
+            android:translationY="15dp" />
 
         <TextView
             android:id="@+id/textHomeHeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/HintHeight"/>
+            android:text="@string/HintHeight"
+            android:translationY="15dp" />
 
         <TextView
             android:id="@+id/textHomeWeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/HintWeight"/>
+            android:text="@string/HintWeight"
+            android:translationY="15dp" />
     </LinearLayout>
 
     <LinearLayout

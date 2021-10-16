@@ -3,24 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/activity_home_screen.xml" value="0.264" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/activity_user_introduction.xml" value="0.1598731884057971" />
-        <entry key="..\:/Users/Muta/AndroidStudioProjects/HealthyHawk/app/src/main/res/layout/activity_book_facilities.xml" value="0.25" />
-        <entry key="..\:/Users/Muta/AndroidStudioProjects/HealthyHawk/app/src/main/res/layout/activity_exercise_log.xml" value="0.20052083333333334" />
-        <entry key="..\:/Users/Muta/AndroidStudioProjects/HealthyHawk/app/src/main/res/layout/activity_home_screen.xml" value="0.33" />
-        <entry key="..\:/Users/Muta/AndroidStudioProjects/HealthyHawk/app/src/main/res/layout/activity_main.xml" value="0.5" />
-        <entry key="..\:/Users/Muta/AndroidStudioProjects/HealthyHawk/app/src/main/res/layout/activity_profile_creator.xml" value="0.20052083333333334" />
-        <entry key="..\:/Users/Muta/AndroidStudioProjects/HealthyHawk/app/src/main/res/layout/activity_weight_log.xml" value="0.20052083333333334" />
-        <entry key="..\:/Users/Muta/AndroidStudioProjects/HealthyHawk/app/src/main/res/layout/fragment_home__screen.xml" value="0.67" />
-        <entry key="..\:/Users/Muta/AndroidStudioProjects/HealthyHawk/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.21666666666666667" />
-        <entry key="app/src/main/res/layout/activity_home_screen.xml" value="0.34739583333333335" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2140625" />
+        <entry key="app/src/main/res/layout/activity_home_screen.xml" value="0.29257246376811596" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/healthyhawk_launcher.xml" value="0.2140625" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/healthyhawk_launcher_round.xml" value="0.2140625" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2140625" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/build/classes" />
-  </component>
-  <component name="ProjectType">
-    <option name="id" value="Android" />
-  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>

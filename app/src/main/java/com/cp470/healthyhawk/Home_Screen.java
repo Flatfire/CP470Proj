@@ -1,4 +1,4 @@
-package com.judypraught.healthyhawk;
+package com.cp470.healthyhawk;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,7 +28,6 @@ public class Home_Screen extends AppCompatActivity {
     TextView textNickname;
     TextView textWeight;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
@@ -47,6 +47,7 @@ public class Home_Screen extends AppCompatActivity {
         SharedPreferences mPrefs = getSharedPreferences(preference_file_name, MODE_PRIVATE);
 
         String key_is_registered = getString(R.string.preference_key_is_registered);
+        // Get registration condition. Return false if not found.
         boolean is_registered = mPrefs.getBoolean(key_is_registered, false);
 
         // Either launch the User Introduction or load the data for Home Page
@@ -77,10 +78,10 @@ public class Home_Screen extends AppCompatActivity {
             startActivityForResult(intent, LAUNCH_BOOK_FACILITIES);
         });
     }
-
-    @Override
+    // Check for data returned by activity results
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        // Check for appropriate response from user introduction activity
         if (requestCode == LAUNCH_USER_INTRODUCTION) {
             if (resultCode == Activity.RESULT_OK) {
                 populateHomeScreen();
@@ -93,28 +94,31 @@ public class Home_Screen extends AppCompatActivity {
         SharedPreferences mPrefs = getSharedPreferences(preference_file_name, MODE_PRIVATE);
 
         String key_nickname = getString(R.string.preference_key_nickname);
-        textNickname.setText(mPrefs.getString(key_nickname, ""));
+        String welcome_string = "Welcome back, " + mPrefs.getString(key_nickname,"");
+        textNickname.setText(welcome_string);
 
         String key_age = getString(R.string.preference_key_age);
-        textAge.setText(mPrefs.getString(key_age, "0"));
+        textAge.setText("Age: " + mPrefs.getString(key_age, "0"));
 
         // Show gender if not "Prefer not to say"
         String key_gender = getString(R.string.preference_key_gender);
         if (mPrefs.getString(key_gender, "Prefer not to say").compareTo("Prefer not to say")
                 != 0) {
-            textGender.setText(mPrefs.getString(key_gender, ""));
+            textGender.setText("Gender: " + mPrefs.getString(key_gender, ""));
         }
 
         String key_height = getString(R.string.preference_key_height);
         String key_height_unit = getString(R.string.preference_key_height_unit);
-        String height = mPrefs.getString(key_height, "0")
+        String height = "Height: "
+                + mPrefs.getString(key_height, "0")
                 + " "
                 + mPrefs.getString(key_height_unit, "");
         textHeight.setText(height);
 
         String key_weight = getString(R.string.preference_key_weight);
         String key_weight_unit = getString(R.string.preference_key_weight_unit);
-        String weight = mPrefs.getString(key_weight, "0")
+        String weight = "Weight: "
+                + mPrefs.getString(key_weight, "0")
                 + " "
                 + mPrefs.getString(key_weight_unit, "");
         textWeight.setText(weight);
