@@ -27,7 +27,6 @@ public class Home_Screen extends AppCompatActivity {
     TextView textNickname;
     TextView textWeight;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
@@ -47,6 +46,7 @@ public class Home_Screen extends AppCompatActivity {
         SharedPreferences mPrefs = getSharedPreferences(preference_file_name, MODE_PRIVATE);
 
         String key_is_registered = getString(R.string.preference_key_is_registered);
+        // Get registration condition. Return false if not found.
         boolean is_registered = mPrefs.getBoolean(key_is_registered, false);
 
         // Either launch the User Introduction or load the data for Home Page
@@ -77,10 +77,10 @@ public class Home_Screen extends AppCompatActivity {
             startActivityForResult(intent, LAUNCH_BOOK_FACILITIES);
         });
     }
-
-    @Override
+    // Check for data returned by activity results
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        // Check for appropriate response from user introduction activity
         if (requestCode == LAUNCH_USER_INTRODUCTION) {
             if (resultCode == Activity.RESULT_OK) {
                 populateHomeScreen();

@@ -40,7 +40,6 @@ public class User_Introduction extends AppCompatActivity {
     String heightUnit;
     String weightUnit;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_introduction);
