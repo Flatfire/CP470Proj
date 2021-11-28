@@ -20,19 +20,22 @@
         <activity
             android:name=".Book_Facilities"
             android:exported="true"
+            android:label="@string/label_book_facilities"
             android:parentActivityName=".Home_Screen" />
         <activity
             android:name=".Weight_Log"
             android:exported="true"
+            android:label="@string/label_weight_log"
             android:parentActivityName=".Home_Screen" />
         <activity
             android:name=".Exercise_Log"
             android:exported="true"
+            android:label="@string/label_exercise_log"
             android:parentActivityName=".Home_Screen" />
         <activity
             android:name=".Home_Screen"
-            android:label="@string/label_home_screen"
-            android:exported="true" />
+            android:exported="true"
+            android:label="@string/label_home_screen" />
         <activity
             android:name=".Main_Activity"
             android:exported="true"
