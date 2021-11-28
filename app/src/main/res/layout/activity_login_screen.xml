@@ -4,11 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Weight_Log">
-    <TextView
-        android:id="@+id/WeightLogTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/WeightLogTitle"/>
+    tools:context=".Login_Screen">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

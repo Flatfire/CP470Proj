@@ -1,9 +1,12 @@
 package com.cp470.healthyhawk;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,7 +23,7 @@ public class Home_Screen extends AppCompatActivity {
     public static final int LAUNCH_BOOK_FACILITIES   = 13;
 
     // Variables
-    LinearLayout layoutHomePage;
+    ConstraintLayout layoutHomePage;
     LinearLayout layoutHomeNavigation;
     TextView textAge;
     TextView textGender;
@@ -89,16 +92,37 @@ public class Home_Screen extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setMessage("Do you want to Exit?");
+        builder.setPositiveButton("Yes", (dialog, which) -> {
+            //if user pressed "yes", then he is allowed to exit from application
+            finish();
+        });
+        builder.setNegativeButton("No", (dialog, which) -> {
+            //if user select "No", just cancel this dialog and continue with app
+            dialog.cancel();
+        });
+        AlertDialog alert=builder.create();
+        alert.show();
+    }
+
     private void populateHomeScreen() {
         String preference_file_name = getString(R.string.preference_file_name);
         SharedPreferences mPrefs = getSharedPreferences(preference_file_name, MODE_PRIVATE);
 
         String key_nickname = getString(R.string.preference_key_nickname);
-        String welcome_string = "Welcome back, " + mPrefs.getString(key_nickname,"");
+        String welcome_string = "Hi, " + mPrefs.getString(key_nickname,"");
         textNickname.setText(welcome_string);
 
         String key_age = getString(R.string.preference_key_age);
-        textAge.setText("Age: " + mPrefs.getString(key_age, "0"));
+        String age =
+                mPrefs.getString(key_age, "0")
+                + " "
+                + "years";
+        textAge.setText(age);
 
         // Show gender if not "Prefer not to say"
         String key_gender = getString(R.string.preference_key_gender);
@@ -109,16 +133,16 @@ public class Home_Screen extends AppCompatActivity {
 
         String key_height = getString(R.string.preference_key_height);
         String key_height_unit = getString(R.string.preference_key_height_unit);
-        String height = "Height: "
-                + mPrefs.getString(key_height, "0")
+        String height =
+                mPrefs.getString(key_height, "0")
                 + " "
                 + mPrefs.getString(key_height_unit, "");
         textHeight.setText(height);
 
         String key_weight = getString(R.string.preference_key_weight);
         String key_weight_unit = getString(R.string.preference_key_weight_unit);
-        String weight = "Weight: "
-                + mPrefs.getString(key_weight, "0")
+        String weight =
+                mPrefs.getString(key_weight, "0")
                 + " "
                 + mPrefs.getString(key_weight_unit, "");
         textWeight.setText(weight);
