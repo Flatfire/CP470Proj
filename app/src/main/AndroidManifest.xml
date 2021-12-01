@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cp470.healthyhawk">
+    package="com.cp470.healthyhawk" >
 
     <application
         android:allowBackup="true"
@@ -8,34 +8,38 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/healthyhawk_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.HealthyHawk">
+        android:theme="@style/Theme.HealthyHawk" >
         <activity
-            android:name="com.cp470.healthyhawk.User_Introduction"
+            android:name=".Login_Screen"
+            android:exported="true" />
+        <activity
+            android:name=".User_Introduction"
             android:exported="true"
-            android:parentActivityName="com.cp470.healthyhawk.Home_Screen" />
+            android:label="@string/label_user_introduction"
+            android:parentActivityName=".Main_Activity" />
         <activity
-            android:name="com.cp470.healthyhawk.Book_Facilities"
+            android:name=".Book_Facilities"
             android:exported="true"
-            android:parentActivityName="com.cp470.healthyhawk.Home_Screen" />
+            android:label="@string/label_book_facilities"
+            android:parentActivityName=".Home_Screen" />
         <activity
-            android:name="com.cp470.healthyhawk.Weight_Log"
+            android:name=".Weight_Log"
             android:exported="true"
-            android:parentActivityName="com.cp470.healthyhawk.Home_Screen" />
+            android:label="@string/label_weight_log"
+            android:parentActivityName=".Home_Screen" />
         <activity
-            android:name="com.cp470.healthyhawk.Exercise_Log"
+            android:name=".Exercise_Log"
             android:exported="true"
-            android:parentActivityName="com.cp470.healthyhawk.Home_Screen" />
+            android:label="@string/label_exercise_log"
+            android:parentActivityName=".Home_Screen" />
         <activity
-            android:name="com.cp470.healthyhawk.Profile_Creator"
+            android:name=".Home_Screen"
             android:exported="true"
-            android:parentActivityName="com.cp470.healthyhawk.Login_Screen" />
+            android:label="@string/label_home_screen" />
         <activity
-            android:name="com.cp470.healthyhawk.Login_Screen"
+            android:name=".Main_Activity"
             android:exported="true"
-            android:parentActivityName="com.cp470.healthyhawk.Home_Screen" />
-        <activity
-            android:name="com.cp470.healthyhawk.Home_Screen"
-            android:exported="true">
+            android:theme="@style/Theme.HealthyHawk.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
