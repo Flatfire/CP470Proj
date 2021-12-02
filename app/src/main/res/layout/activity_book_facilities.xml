@@ -1,25 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Login_Screen">
 
-    <TextView
-        android:id="@+id/BookFacilitiesTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/BookFacilitiesTitle"/>
-
-    <Button
-        android:id="@+id/LoginToBook"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/loggedIn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/LoginToBook"
-        tools:layout_editor_absoluteX="185dp"
-        tools:layout_editor_absoluteY="160dp"
-        />
+        android:layout_height="match_parent"
+        android:background="@drawable/splash"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".Login_Screen">
+
+        <Button
+            android:id="@+id/LoginToBook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/LoginToBook"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.75" />
 
 
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/notLoggedIn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".Login_Screen">
+
+        <LinearLayout
+            android:id="@+id/formBookFacility"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/titleBook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/BookFormTitle"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/labelFacility"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/LabelFacility" />
+
+            <Spinner
+                android:id="@+id/spinnerFacility"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/Facilities" />
+
+            <TextView
+                android:id="@+id/labelDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/LabelDate" />
+
+            <CalendarView
+                android:id="@+id/layoutDatePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/labelTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/LabelTime" />
+
+            <LinearLayout
+                android:id="@+id/layoutTimePickerFrom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/labelFrom"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/LabelFrom" />
+
+                <EditText
+                    android:id="@+id/editTimeFrom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="time" />
+
+                <Spinner
+                    android:id="@+id/spinnerFromAmPm"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/AmPm" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutTimePickerTo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/labelTo"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/LabelTo" />
+
+                <EditText
+                    android:id="@+id/editTimeTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="time" />
+
+                <Spinner
+                    android:id="@+id/spinnerToAmPm"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/AmPm" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/buttonSubmitBooking"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/ButtonSubmitBooking" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,42 @@
 <resources>
+    <!--SharedPreferences File Variables-->
+    <string name="preference_file_name">healthyhawk_app_preferences</string>
+    <string name="preference_key_is_registered">bool_is_registered</string>
+    <string name="preference_key_nickname">user_nickname</string>
+    <string name="preference_key_age">user_age</string>
+    <string name="preference_key_gender">user_gender</string>
+    <string name="preference_key_height">user_height</string>
+    <string name="preference_key_height_unit">user_height_unit</string>
+    <string name="preference_key_weight">user_weight</string>
+    <string name="preference_key_weight_unit">user_weight_unit</string>
+
+    <!-- String Lists -->
+    <string-array name="Genders">
+        <item>Woman</item>
+        <item>Man</item>
+        <item>Non-binary/non-conforming</item>
+        <item>Prefer not to say</item>
+    </string-array>
+    <string-array name="HeightUnits">
+        <item>cm</item>
+        <item>\"</item>
+    </string-array>
+    <string-array name="WeightUnits">
+        <item>kg</item>
+        <item>lb</item>
+    </string-array>
+    <string-array name="AmPm">
+        <item>AM</item>
+        <item>PM</item>
+    </string-array>
+    <string-array name="Facilities">
+        <item>Facility 1</item>
+        <item>Facility 2</item>
+        <item>Facility 3</item>
+        <item>Facility 4</item>
+    </string-array>
+
+    <!-- Unsorted, All Other Strings -->
     <string name="app_name">Healthy Hawk</string>
     <string name="LoginTitle">Login</string>
     <string name="ExerciseLogTitle">Exercise Log</string>
@@ -13,8 +51,8 @@
     <string name="ExerciseLogButton">Exercise Log</string>
     <string name="WeightLogButton">Weight Log</string>
     <string name="BookFacilitiesButton">Book Facilities</string>
-    <string name="LoginToBook">Login To Book</string>
-    <string name="LabelNickname">Nickname</string>
+    <string name="LoginToBook">Login To Book Facilities</string>
+    <string name="LabelNickname">Name</string>
     <string name="HintNickname">Your Name</string>
     <string name="LabelAge">Age</string>
     <string name="HintAge">xx</string>
@@ -29,30 +67,18 @@
     <string name="ButtonSave">Save</string>
     <string name="successful_registration">Your info has been saved!</string>
     <string name="commit_preferences_failed">Failed to save. Try again.</string>
-
-    <string-array name="Genders">
-        <item>Woman</item>
-        <item>Man</item>
-        <item>Non-binary/non-conforming</item>
-        <item>Prefer not to say</item>
-    </string-array>
-    <string-array name="HeightUnits">
-        <item>Centimetres (cm)</item>
-        <item>Inches</item>
-    </string-array>
-    <string-array name="WeightUnits">
-        <item>Kilograms (kg)</item>
-        <item>Pounds (lb)</item>
-    </string-array>
-
-    <!--SharedPreferences File Variables-->
-    <string name="preference_file_name">healthyhawk_app_preferences</string>
-    <string name="preference_key_is_registered">bool_is_registered</string>
-    <string name="preference_key_nickname">user_nickname</string>
-    <string name="preference_key_age">user_age</string>
-    <string name="preference_key_gender">user_gender</string>
-    <string name="preference_key_height">user_height</string>
-    <string name="preference_key_height_unit">user_height_unit</string>
-    <string name="preference_key_weight">user_weight</string>
-    <string name="preference_key_weight_unit">user_weight_unit</string>
+    <string name="SetupProfileButton">Set Up My Profile</string>
+    <string name="IntroTopMessageText">Take a moment to set up your personal profile</string>
+    <string name="label_user_introduction">Profile Details</string>
+    <string name="label_home_screen">HealthyHawk</string>
+    <string name="label_exercise_log">Exercise Log</string>
+    <string name="label_weight_log">Weight Log</string>
+    <string name="BookFormTitle">Book Facilities</string>
+    <string name="LabelFacility">Facility</string>
+    <string name="LabelDate">Date</string>
+    <string name="LabelTime">Time</string>
+    <string name="LabelFrom">From:</string>
+    <string name="LabelTo">To:</string>
+    <string name="ButtonSubmitBooking">Submit Booking Request</string>
+    <string name="label_book_facilities">Book Facilities</string>
 </resources>
