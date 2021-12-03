@@ -3,21 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/drawable/ic_outline_cake_24.xml" value="0.1" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/drawable/ic_outline_height_24.xml" value="0.1" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/drawable/ic_outline_monitor_weight_24.xml" value="0.1" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/drawable/img.xml" value="0.1" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/drawable/outline_monitor_weight_24.xml" value="0.1" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/activity_book_facilities.xml" value="0.264" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/activity_exercise_log.xml" value="0.2" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/activity_home_screen.xml" value="0.136" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/activity_login_screen.xml" value="0.18510928961748635" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/activity_login_screen2.xml" value="0.1" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/activity_main.xml" value="0.176" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/activity_user_introduction.xml" value="0.264" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/activity_weight_log.xml" value="0.2536231884057971" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2140625" />
+        <entry key="app/src/main/res/layout/activity_book_facilities.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/activity_home_screen.xml" value="0.29257246376811596" />
+        <entry key="app/src/main/res/layout/activity_login_screen.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_weight_log.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/healthyhawk_launcher.xml" value="0.2140625" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/healthyhawk_launcher_round.xml" value="0.2140625" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2140625" />

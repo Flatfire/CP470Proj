@@ -20,6 +20,7 @@ public class Home_Screen extends AppCompatActivity {
     public static final int LAUNCH_USER_INTRODUCTION = 0;
     public static final int LAUNCH_EXERCISE_LOG      = 11;
     public static final int LAUNCH_WEIGHT_LOG        = 12;
+    public static final int LAUNCH_LOGIN             = 14;
     public static final int LAUNCH_BOOK_FACILITIES   = 13;
 
     // Variables
@@ -77,8 +78,8 @@ public class Home_Screen extends AppCompatActivity {
 
         Button BookFacilitiesButton = findViewById(R.id.BookFacilitiesButton);
         BookFacilitiesButton.setOnClickListener(view -> {
-            Intent intent = new Intent(Home_Screen.this, Book_Facilities.class);
-            startActivityForResult(intent, LAUNCH_BOOK_FACILITIES);
+            Intent intent = new Intent(Home_Screen.this, Login_Screen.class);
+            startActivityForResult(intent, LAUNCH_LOGIN);
         });
     }
     // Check for data returned by activity results
