@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "460027280820",
+    "project_id": "healthy-hawk",
+    "storage_bucket": "healthy-hawk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:460027280820:android:0497ab083981dd5dab46e1",
+        "android_client_info": {
+          "package_name": "com.cp470.healthyhawk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "460027280820-46dpn2pupqerfj5dhblr87bg0hnto2qd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_uxjQI-h8cbRbeorM_YeekVy74irp1-o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "460027280820-46dpn2pupqerfj5dhblr87bg0hnto2qd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
