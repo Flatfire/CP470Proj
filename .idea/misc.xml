@@ -19,6 +19,7 @@
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2140625" />
         <entry key="app/src/main/res/layout/activity_exercise_log.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/activity_home_screen.xml" value="0.29257246376811596" />
+        <entry key="app/src/main/res/layout/activity_user_introduction.xml" value="0.33177083333333335" />
         <entry key="app/src/main/res/layout/activity_weight_log.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/dialog_log_goal_weight.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/dialog_log_weight.xml" value="0.37604166666666666" />

@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/CurrentWeightTitleText"
-            android:textColor="@color/purple_700"
+            android:textColor="@color/purple_a"
             android:textSize="18sp" />
 
         <TextView
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:text="@string/GoalWeightTitleText"
-            android:textColor="@color/purple_700"
+            android:textColor="@color/purple_a"
             android:textSize="18sp" />
 
         <TextView
@@ -51,14 +51,12 @@
 
     </LinearLayout>
 
-    <com.jjoe64.graphview.helper.GraphViewXML
+    <com.jjoe64.graphview.GraphView
         android:id="@+id/weightProgressChart"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_marginHorizontal="36dp"
-        android:layout_marginTop="36dp"
-        android:title="@string/WeightChartTitle"
-        app:seriesData="0=231;1=229;2=229;3=228;4=227;5=227.5" />
+        android:layout_marginTop="36dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
