@@ -14,7 +14,6 @@ public class DAOprofile {
 
     }
 
-
     public Task<Void> add(Booking_Profile bookingProfile){
         return Reference.push().setValue(bookingProfile);
     }
