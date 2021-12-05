@@ -58,7 +58,6 @@ public class Profile_Creator extends AppCompatActivity {
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
                     }
                 });
 

@@ -1,0 +1,26 @@
+Index: app/src/main/java/com/cp470/healthyhawk/Profile_Creator.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.cp470.healthyhawk;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.Toast;\r\n\r\nimport com.google.firebase.database.DataSnapshot;\r\nimport com.google.firebase.database.DatabaseError;\r\nimport com.google.firebase.database.FirebaseDatabase;\r\nimport com.google.firebase.database.Query;\r\nimport com.google.firebase.database.ValueEventListener;\r\n\r\npublic class Profile_Creator extends AppCompatActivity {\r\n\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_profile_creator);\r\n        Button registerButton = findViewById(R.id.RegisterButton);\r\n        final EditText email = findViewById(R.id.editTextTextEmailAddress);\r\n        final EditText password = findViewById(R.id.editTextTextPassword);\r\n        DAOprofile dao = new DAOprofile();\r\n        FirebaseDatabase db = FirebaseDatabase.getInstance();\r\n\r\n        registerButton.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                Query query = db.getReference().child(\"Booking_Profile\");\r\n                query.addValueEventListener(new ValueEventListener() {\r\n                    @Override\r\n                    public void onDataChange(@NonNull DataSnapshot snapshot) {\r\n                        boolean toggle = false;\r\n                        for(DataSnapshot Data: snapshot.getChildren() ) {\r\n                            Booking_Profile info = Data.getValue(Booking_Profile.class);\r\n                            String text = info.getEmail();\r\n                            if (text.equals(email.getText().toString())) {\r\n                                toggle = true;\r\n                                break;\r\n                            }\r\n                            else{\r\n                                toggle = false;\r\n                            }\r\n                        }\r\n                        if (!toggle) {\r\n                            Booking_Profile bookingProfile = new Booking_Profile(email.getText().toString(), password.getText().toString());\r\n                            dao.add(bookingProfile);\r\n                            Intent intent = new Intent(Profile_Creator.this, Login_Screen.class);\r\n                            startActivityForResult(intent, 10);\r\n                        }\r\n                        else {\r\n                            Toast.makeText(Profile_Creator.this, \"User already exists\", Toast.LENGTH_LONG).show();\r\n                        }\r\n                    }\r\n                    @Override\r\n                    public void onCancelled(@NonNull DatabaseError error) {\r\n\r\n                    }\r\n                });\r\n\r\n            }\r\n        });\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/cp470/healthyhawk/Profile_Creator.java b/app/src/main/java/com/cp470/healthyhawk/Profile_Creator.java
+--- a/app/src/main/java/com/cp470/healthyhawk/Profile_Creator.java	
++++ b/app/src/main/java/com/cp470/healthyhawk/Profile_Creator.java	
+@@ -26,7 +26,6 @@
+         final EditText password = findViewById(R.id.editTextTextPassword);
+         DAOprofile dao = new DAOprofile();
+         FirebaseDatabase db = FirebaseDatabase.getInstance();
+-
+         registerButton.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+@@ -58,7 +57,6 @@
+                     }
+                     @Override
+                     public void onCancelled(@NonNull DatabaseError error) {
+-
+                     }
+                 });
+ 
