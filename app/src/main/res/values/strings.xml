@@ -45,10 +45,11 @@
     <string name="WeightLogTitle">Weight Log</string>
     <string name="DefaultLogin">StudentName@mylaurier.ca</string>
     <string name="PasswordTitle">Password</string>
-    <string name="PasswordTitleReEnter">Re-enter Password</string>
+    <string name="PasswordTitleReEnter">Confirm Password</string>
+    <string name="ReturnToLogin">Return to Login</string>
     <string name="RegisterButton">Register</string>
     <string name="LoginButton">Login</string>
-    <string name="Enter_Email">Please Enter Email</string>
+    <string name="Enter_Email">Email</string>
     <string name="ExerciseLogButton">Exercise Log</string>
     <string name="WeightLogButton">Weight Log</string>
     <string name="BookFacilitiesButton">Book Facilities</string>
