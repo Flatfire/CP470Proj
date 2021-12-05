@@ -10,10 +10,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
 import com.google.firebase.database.FirebaseDatabase;
@@ -23,52 +27,113 @@ import java.util.Objects;
 
 
 public class Login_Screen extends AppCompatActivity {
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Button LoginButton = findViewById(R.id.LoginButton);
-        Button Profile_Creator_Button = findViewById(R.id.RegisterButton);
-        final EditText email = findViewById(R.id.editTextTextEmailAddress);
-        FirebaseDatabase db =FirebaseDatabase.getInstance();
-
-        LoginButton.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_login_screen);
+        Button login  = findViewById(R.id.bookingLogin);
+        Button register  = findViewById(R.id.bookingRegister);
+        final EditText email = findViewById(R.id.bookingEmail);
+        final EditText password = findViewById(R.id.bookingPassword);
+        EditText confirmPass = findViewById(R.id.confirmPassword);
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        Button returnLogin = findViewById(R.id.returnLogin);
+        DAOprofile dao = new DAOprofile();
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Query query = db.getReference().child("Booking_Profile").orderByChild("email").equalTo(email.getText().toString()).limitToFirst(1);
-
-                query.addValueEventListener(new ValueEventListener() {
+                // Retrieve booking profiles
+                db.child("Booking_Profile").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(DataSnapshot Data: snapshot.getChildren() ){
-                            Booking_Profile info = Data.getValue(Booking_Profile.class);
-                            String text = info.getEmail();
-                            Toast.makeText(Login_Screen.this, "user:" + text, Toast.LENGTH_LONG).show();
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (!task.isSuccessful()) {
+                            Log.e("firebase", "Error getting data", task.getException());
+                        }
+                        else {
+                            // Check if user already exists and password correct
+                            boolean registered = false;
+                            DataSnapshot snapshot = task.getResult();
+                            for(DataSnapshot Data: snapshot.getChildren() ) {
+                                Booking_Profile info = Data.getValue(Booking_Profile.class);
+                                String userEmail = info.getEmail();
+                                String userPassword = info.getPassword();
+                                if (userEmail.equals(email.getText().toString()) & userPassword.equals(password.getText().toString())) {
+                                    registered = true;
+                                    break;
+                                }
+                                else{
+                                    registered = false;
+                                }
+                            }
+                            // Register user if account does not exist
+                            if (registered) {
+                                Toast.makeText(Login_Screen.this, "Logged in", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(Login_Screen.this, Book_Facilities.class);
+                                startActivityForResult(intent, 10);
+                            }
+                            else{
+                                Toast.makeText(Login_Screen.this, "Password incorrect or User nonexistent", Toast.LENGTH_LONG).show();
+                            }
                         }
 
                     }
-
+                });
+            }
+        });
+        register.setOnClickListener( view -> {
+            if (login.getVisibility() == View.VISIBLE){
+                login.setVisibility(View.GONE);
+                confirmPass.setVisibility(View.VISIBLE);
+                returnLogin.setVisibility(View.VISIBLE);
+            }
+            if(email.getText().toString().matches("") & password.getText().toString().matches("")) {
+                Toast.makeText(Login_Screen.this, "Please enter data", Toast.LENGTH_LONG).show();
+            }
+            else {
+                register.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
+                    public void onClick(View view) {
+                        // Retrieve booking profiles
+                        db.child("Booking_Profile").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if (!task.isSuccessful()) {
+                                    Log.e("firebase", "Error getting data", task.getException());
+                                } else {
+                                    // Check if user already exists
+                                    boolean registered = false;
+                                    DataSnapshot snapshot = task.getResult();
+                                    for (DataSnapshot Data : snapshot.getChildren()) {
+                                        Booking_Profile info = Data.getValue(Booking_Profile.class);
+                                        String text = info.getEmail();
+                                        if (text.equals(email.getText().toString())) {
+                                            registered = true;
+                                            break;
+                                        } else {
+                                            registered = false;
+                                        }
+                                    }
+                                    // Register user if account does not exist
+                                    if (!registered) {
+                                        Booking_Profile bookingProfile = new Booking_Profile(email.getText().toString(), password.getText().toString());
+                                        dao.add(bookingProfile);
+                                        Intent intent = new Intent(Login_Screen.this, Login_Screen.class);
+                                        startActivityForResult(intent, 10);
+                                    }
+                                    // Inform user if they already have an account
+                                    else {
+                                        Toast.makeText(Login_Screen.this, "User already exists", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            }
+                        });
                     }
                 });
-
-                Intent intent =  new Intent(Login_Screen.this, Home_Screen.class);
-                startActivityForResult(intent, 10);
-
-
             }
         });
-
-        Profile_Creator_Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Login_Screen.this, Profile_Creator.class);
-                startActivityForResult(intent, 10);
-            }
+        returnLogin.setOnClickListener(view -> {
+            login.setVisibility(View.VISIBLE);
+            confirmPass.setVisibility(View.GONE);
+            returnLogin.setVisibility(View.GONE);
         });
-
-
     }
 }

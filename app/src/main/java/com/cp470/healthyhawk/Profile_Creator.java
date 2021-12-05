@@ -25,10 +25,10 @@ public class Profile_Creator extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_creator);
-        Button registerButton = findViewById(R.id.RegisterButton);
-        final EditText email = findViewById(R.id.editTextTextEmailAddress);
-        final EditText password = findViewById(R.id.editTextTextPassword);
+        setContentView(R.layout.activity_login_screen);
+        Button registerButton = findViewById(R.id.bookingRegister);
+        final EditText email = findViewById(R.id.bookingEmail);
+        final EditText password = findViewById(R.id.confirmPassword);
         DAOprofile dao = new DAOprofile();
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
 
