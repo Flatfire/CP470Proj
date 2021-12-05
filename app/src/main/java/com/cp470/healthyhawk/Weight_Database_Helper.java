@@ -9,7 +9,7 @@ public class Weight_Database_Helper extends SQLiteOpenHelper {
     private static final String CLASS_NAME = "WeightDatabaseHelper";
 
     private static final String DATABASE_NAME = "HealthyHawk.db";
-    private static final int VERSION_NUM = 2;
+    private static final int VERSION_NUM = 1;
 
     public static final String KEY_ID = "_id";
     public static final String KEY_DATE_WEIGHT_LOGGED = "date_logged";
