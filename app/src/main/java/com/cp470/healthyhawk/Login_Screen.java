@@ -1,61 +1,74 @@
 package com.cp470.healthyhawk;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
+
 
 public class Login_Screen extends AppCompatActivity {
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_screen);
-        TextView loginMessage = findViewById(R.id.loginMessage);
-        EditText email = findViewById(R.id.bookingEmail);
-        EditText password = findViewById(R.id.bookingPassword);
-        EditText confirmPass = findViewById(R.id.confirmPassword);
-        Button register = findViewById(R.id.bookingRegister);
-        Button login = findViewById(R.id.bookingLogin);
-        Button returnLogin = findViewById(R.id.returnLogin);
+        setContentView(R.layout.activity_main);
+        Button LoginButton = findViewById(R.id.LoginButton);
+        Button Profile_Creator_Button = findViewById(R.id.RegisterButton);
+        final EditText email = findViewById(R.id.editTextTextEmailAddress);
+        FirebaseDatabase db =FirebaseDatabase.getInstance();
 
-        register.setOnClickListener( view -> {
-            if (login.getVisibility() == View.VISIBLE){
-                login.setVisibility(View.GONE);
-                confirmPass.setVisibility(View.VISIBLE);
-                returnLogin.setVisibility(View.VISIBLE);
+        LoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Query query = db.getReference().child("Booking_Profile").orderByChild("email").equalTo(email.getText().toString()).limitToFirst(1);
+
+                query.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot Data: snapshot.getChildren() ){
+                            Booking_Profile info = Data.getValue(Booking_Profile.class);
+                            String text = info.getEmail();
+                            Toast.makeText(Login_Screen.this, "user:" + text, Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+                Intent intent =  new Intent(Login_Screen.this, Home_Screen.class);
+                startActivityForResult(intent, 10);
+
+
             }
-            else{
-                //TODO check if account is already registered
-                if (true) {
-                    //TODO perform registration task
-                    login.setVisibility(View.VISIBLE);
-                    confirmPass.setVisibility(View.GONE);
-                    loginMessage.setVisibility(View.VISIBLE);
-                    returnLogin.setVisibility(View.GONE);
-                    loginMessage.setText("Registration Successful.\nPlease login.");
-                    loginMessage.setTextColor(this.getColor(R.color.DarkGreen));
-                }
+        });
+
+        Profile_Creator_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Login_Screen.this, Profile_Creator.class);
+                startActivityForResult(intent, 10);
             }
         });
-        login.setOnClickListener(view -> {
-            //TODO database check against email/password
-            Intent bookingIntent = new Intent(Login_Screen.this, Book_Facilities.class);
-            bookingIntent.putExtra("email", email.getText().toString());
-            bookingIntent.putExtra("password", password.getText().toString());
-            startActivity(bookingIntent);
-        });
-        returnLogin.setOnClickListener(view -> {
-            login.setVisibility(View.VISIBLE);
-            confirmPass.setVisibility(View.GONE);
-            loginMessage.setVisibility(View.VISIBLE);
-            returnLogin.setVisibility(View.GONE);
-        });
+
+
     }
 }
