@@ -1,8 +1,10 @@
 package com.cp470.healthyhawk;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -53,6 +56,8 @@ public class Book_Facilities extends AppCompatActivity {
     protected ArrayAdapter<String> hoursAdapter;
     protected ArrayList<String> halves = new ArrayList<>();
     protected ArrayAdapter<String> halvesAdapter;
+    protected long currentDate;
+    protected Snackbar cliffBar;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +80,7 @@ public class Book_Facilities extends AppCompatActivity {
         facilitySpinner.setAdapter(facilityAdapter);
         facilityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Generate hour intervals for spinner
-        for (int i = 12; i > 0; i--){
+        for (int i = 12; i >= 0; i--){
             hours.add(""+i);
         }
         halves.add("00");
@@ -90,13 +95,43 @@ public class Book_Facilities extends AppCompatActivity {
         pickEndHalf.setAdapter(halvesAdapter);
         hoursAdapter.notifyDataSetChanged();
         halvesAdapter.notifyDataSetChanged();
-        pickStartHour.setSelection(0);
+        pickStartHour.setSelection(12);
         pickStartHalf.setSelection(0);
-        pickEndHour.setSelection(0);
+        pickEndHour.setSelection(12);
         pickEndHalf.setSelection(0);
+        currentDate = bookCalendar.getDate();
+
+
         // Grab user data from intent
         Intent intent = getIntent();
         email = intent.getStringExtra("email");
+
+        pickEndHour.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (pickEndHour.getSelectedItem().equals("12") && toAmPm.getSelectedItem().equals("AM")){
+                    toAmPm.setSelection(1);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        pickStartHour.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (pickStartHour.getSelectedItem().equals("12") && fromAmPm.getSelectedItem().equals("AM")){
+                    fromAmPm.setSelection(1);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         // Set building spinner data
         db.child(BUILDINGS).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -156,11 +191,14 @@ public class Book_Facilities extends AppCompatActivity {
                 Calendar c = Calendar.getInstance();
                 c.set(i,i1,i2);
                 bookDate = c.getTime();
+                bookCalendar.setDate(currentDate+1);
             }
         });
         bookingSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int nStartHour, nEndHour;
+                int nStartMin, nEndMin;
                 String bookBuilding = buildingSpinner.getSelectedItem().toString();
                 String bookFacility = facilitySpinner.getSelectedItem().toString();
                 String[] date = bookDate.toString().split(" ");
@@ -169,25 +207,93 @@ public class Book_Facilities extends AppCompatActivity {
                 // Create date format to be stored in database
                 String startTime = formatTime(pickStartHour.getSelectedItem().toString() , pickStartHalf.getSelectedItem().toString(), fromAmPm.toString());
                 String endTime = formatTime(pickEndHour.getSelectedItem().toString() , pickEndHalf.getSelectedItem().toString(), toAmPm.toString());
+                nStartHour = Integer.parseInt(startTime.split(":")[0]);
+                nEndHour = Integer.parseInt(endTime.split(":")[0]);
+                nStartMin = Integer.parseInt(startTime.split(":")[1]);
+                nEndMin = Integer.parseInt(endTime.split(":")[1]);
 
-                db.child(bookBuilding).child("facility").child(bookFacility).child("bookings").child(bookDay).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        boolean bookingConflict = false;
-                        if (!task.isSuccessful()) {
-                            Log.e("firebase", "Error getting data", task.getException());
-                        } else {
-//                            DataSnapshot snapshot = task.getResult();
-//                            for(DataSnapshot Data: snapshot.getChildren() ) {
-//
-//                            }
-                            if (!bookingConflict){
-                                Booking newBooking = new Booking(startTime,endTime,email);
-                                db.child(bookBuilding).child("facility").child(bookFacility).child("bookings").child(bookDay).push().setValue(newBooking);
+                boolean tooShort = false; // None/negative time selected
+                boolean backToTheFuture = false; // True if user tried to book in the past
+
+                if (bookDate.getTime() < currentDate) backToTheFuture = true;
+                if (nStartHour == nEndHour && nStartMin == nEndMin){ tooShort = true;}
+                else if (nStartHour > nEndHour){tooShort = true;}
+                if (!tooShort && !backToTheFuture) {
+                    db.child(bookBuilding).child("facility").child(bookFacility).child("bookings").child(bookDay).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            boolean bookingConflict = false;
+                            if (!task.isSuccessful()) {
+                                Log.e("firebase", "Error getting data", task.getException());
+                            } else {
+                                DataSnapshot snapshot = task.getResult();
+                                if (snapshot.hasChildren()) {
+                                    int startHour, nStartHour, endHour, nEndHour;
+                                    int endMin, nEndMin;
+                                    for (DataSnapshot Data : snapshot.getChildren()) {
+                                        // Set up time variables
+                                        startHour = Integer.parseInt(Data.child("startTime").getValue().toString().split(":")[0]);
+                                        nStartHour = Integer.parseInt(startTime.split(":")[0]);
+                                        endHour = Integer.parseInt(Data.child("endTime").getValue().toString().split(":")[0]);
+                                        nEndHour = Integer.parseInt(endTime.split(":")[0]);
+                                        endMin = Integer.parseInt(Data.child("endTime").getValue().toString().split(":")[1]);
+                                        nEndMin = Integer.parseInt(endTime.split(":")[1]);
+                                        // Check booking constraints
+                                        // Direct overlap check
+                                        if (nStartHour == startHour && nStartHour == endHour) {
+                                            if (nEndMin == endMin) {
+                                                bookingConflict = true;
+                                                break;
+                                            }
+                                        }
+                                        // Partial overlap checks
+                                        else if (nStartHour > startHour && nStartHour < endHour) {
+                                            bookingConflict = true;
+                                            break;
+                                        } else if (nEndHour < endHour && nEndHour > startHour) {
+                                            bookingConflict = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (!bookingConflict) {
+                                    // Push booking to facility
+                                    Booking newBooking = new Booking(startTime, endTime, email);
+                                    db.child(bookBuilding).child("facility").child(bookFacility).child("bookings").child(bookDay).push().setValue(newBooking);
+
+                                    // Display success/confirmation dialog
+                                    String veryNice = bookFacility +" booked successfully for "+bookDay+" from "+newBooking.startTime + " to " + newBooking.endTime;
+                                    AlertDialog.Builder greatSuccess = new AlertDialog.Builder(Book_Facilities.this);
+                                    greatSuccess.setTitle(R.string.BookingDialogSuccess)
+                                            .setMessage(veryNice);
+                                    greatSuccess.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            finish();
+                                        }
+                                    });
+                                    greatSuccess.setNegativeButton("Book Another", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                        }
+                                    });
+                                    AlertDialog bookedDialog = greatSuccess.create();
+                                    bookedDialog.show();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "The facility is unavailable at this time", Toast.LENGTH_LONG).show();
+                                }
                             }
                         }
-                    }
-                });
+                    });
+                }
+                else if (tooShort){
+                    cliffBar = Snackbar.make(findViewById(R.id.bookingView),"End time must be at least 30 minutes later than start time", Snackbar.LENGTH_LONG);
+                    cliffBar.show();
+                }
+                else if (backToTheFuture){
+                    Snackbar hoverboard = Snackbar.make(findViewById(R.id.bookingView),"Great Scott! Marty we've got to go back! You can't book in the past!",Snackbar.LENGTH_LONG);
+                    hoverboard.show();
+                }
             }
         });
     }
@@ -195,7 +301,10 @@ public class Book_Facilities extends AppCompatActivity {
         // Converts 12 hour to 24 hour time stamps
         String fTime = hour+":"+minute;
         if (meridiem.equals("PM") && Integer.parseInt(hour) < 12){
-            fTime = (Integer.parseInt(hour)+12)+":"+minute;
+            fTime = (hour+12+":"+minute);
+        }
+        else if ((meridiem.equals("AM") && Integer.parseInt(hour) == 12)){
+            fTime = 0+":"+minute;
         }
         return fTime;
     }
