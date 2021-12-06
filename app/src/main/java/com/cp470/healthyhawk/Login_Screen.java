@@ -126,8 +126,8 @@ public class Login_Screen extends AppCompatActivity {
                                             login.setVisibility(View.VISIBLE);
                                             confirmPass.setVisibility(View.GONE);
                                             returnLogin.setVisibility(View.GONE);
-                                            infoMessage.setText("Registration successful. Please login below.");
                                             infoMessage.setVisibility(View.VISIBLE);
+                                            infoMessage.setText("Registration successful. Please login below.");
                                         }
                                         // Inform user if they already have an account
                                         else {
