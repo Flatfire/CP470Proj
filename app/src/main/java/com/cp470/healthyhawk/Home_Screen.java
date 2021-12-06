@@ -123,17 +123,32 @@ public class Home_Screen extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // display help dialog when pressed
-        if (item.getItemId() == R.id.action_help) {
-            // inflate Help screen from layout
-            LayoutInflater inflater = getLayoutInflater();
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setView(inflater.inflate(R.layout.dialog_app_help, null));
-            AlertDialog alert = builder.create();
-            alert.show();
-            return true;
-        } else
-            return super.onOptionsItemSelected(item);
+        Intent intent;
+        // call the appropriate button for each item, else call super and do nothing extra
+        switch (item.getItemId()) {
+            case (R.id.action_help):
+                // inflate Help layout to an AlertDialog
+                LayoutInflater inflater = getLayoutInflater();
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setView(inflater.inflate(R.layout.dialog_app_help, null));
+                AlertDialog alert = builder.create();
+                alert.show();
+                return true;
+            case (R.id.action_exercise_log):
+                intent = new Intent(Home_Screen.this, Exercise_Log.class);
+                startActivityForResult(intent, LAUNCH_EXERCISE_LOG);
+                return true;
+            case (R.id.action_weight_log):
+                intent = new Intent(Home_Screen.this, Weight_Log.class);
+                startActivityForResult(intent, LAUNCH_WEIGHT_LOG);
+                return true;
+            case (R.id.action_book_facilities):
+                intent = new Intent(Home_Screen.this, Login_Screen.class);
+                startActivityForResult(intent, LAUNCH_LOGIN);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void populateHomeScreen() {
