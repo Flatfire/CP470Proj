@@ -2,8 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_exercise_log"
+        android:icon="@drawable/ic_menu_baseline_run_24"
+        android:title="@string/ExerciseLogTitle"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_weight_log"
+        android:icon="@drawable/ic_menu_outline_scale_24"
+        android:title="@string/WeightLogTitle"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_book_facilities"
+        android:icon="@drawable/ic_menu_outline_building_24"
+        android:title="@string/BookFacilitiesTitle"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/action_help"
-        android:icon="@drawable/ic_outline_help_24"
+        android:icon="@drawable/ic_menu_outline_help_24"
         android:title="@string/action_help"
         app:showAsAction="ifRoom" />
 </menu>
