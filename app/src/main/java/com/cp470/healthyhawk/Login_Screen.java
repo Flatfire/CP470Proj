@@ -37,6 +37,7 @@ public class Login_Screen extends AppCompatActivity {
         EditText confirmPass = findViewById(R.id.confirmPassword);
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         Button returnLogin = findViewById(R.id.returnLogin);
+        TextView infoMessage = findViewById(R.id.loginMessage);
         DAOprofile dao = new DAOprofile();
 
         // Login verification
@@ -78,7 +79,6 @@ public class Login_Screen extends AppCompatActivity {
                                 Toast.makeText(Login_Screen.this, "Password incorrect or User nonexistent", Toast.LENGTH_LONG).show();
                             }
                         }
-
                     }
                 });
             }
@@ -88,49 +88,57 @@ public class Login_Screen extends AppCompatActivity {
                 login.setVisibility(View.GONE);
                 confirmPass.setVisibility(View.VISIBLE);
                 returnLogin.setVisibility(View.VISIBLE);
-            }
-            // User registration block
-            if(email.getText().toString().matches("") & password.getText().toString().matches("")) {
-                Toast.makeText(Login_Screen.this, "Please enter data", Toast.LENGTH_LONG).show();
-            }
-            else {
-                register.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        // Retrieve booking profiles
-                        db.child("Booking_Profile").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                if (!task.isSuccessful()) {
-                                    Log.e("firebase", "Error getting data", task.getException());
-                                } else {
-                                    // Check if user already exists
-                                    boolean registered = false;
-                                    DataSnapshot snapshot = task.getResult();
-                                    for (DataSnapshot Data : snapshot.getChildren()) {
-                                        Booking_Profile info = Data.getValue(Booking_Profile.class);
-                                        String text = info.getEmail();
-                                        if (text.equals(email.getText().toString())) {
-                                            registered = true;
-                                            break;
-                                        } else {
-                                            registered = false;
+                infoMessage.setVisibility(View.GONE);
+            } else {
+                // User registration block
+                if (email.getText().toString().matches("") & password.getText().toString().matches("")) {
+                    Toast.makeText(Login_Screen.this, "Please enter data", Toast.LENGTH_LONG).show();
+                } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches()) {
+                    Toast.makeText(Login_Screen.this, "Invalid email address", Toast.LENGTH_LONG).show();
+                } else {
+                    register.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            // Retrieve booking profiles
+                            db.child("Booking_Profile").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                    if (!task.isSuccessful()) {
+                                        Log.e("firebase", "Error getting data", task.getException());
+                                    } else {
+                                        // Check if user already exists
+                                        boolean registered = false;
+                                        DataSnapshot snapshot = task.getResult();
+                                        for (DataSnapshot Data : snapshot.getChildren()) {
+                                            Booking_Profile info = Data.getValue(Booking_Profile.class);
+                                            String text = info.getEmail();
+                                            if (text.equals(email.getText().toString())) {
+                                                registered = true;
+                                                break;
+                                            } else {
+                                                registered = false;
+                                            }
+                                        }
+                                        // Register user if account does not exist
+                                        if (!registered) {
+                                            Booking_Profile bookingProfile = new Booking_Profile(email.getText().toString(), password.getText().toString());
+                                            dao.add(bookingProfile);
+                                            login.setVisibility(View.VISIBLE);
+                                            confirmPass.setVisibility(View.GONE);
+                                            returnLogin.setVisibility(View.GONE);
+                                            infoMessage.setText("Registration successful. Please login below.");
+                                            infoMessage.setVisibility(View.VISIBLE);
+                                        }
+                                        // Inform user if they already have an account
+                                        else {
+                                            Toast.makeText(Login_Screen.this, "User already exists", Toast.LENGTH_LONG).show();
                                         }
                                     }
-                                    // Register user if account does not exist
-                                    if (!registered) {
-                                        Booking_Profile bookingProfile = new Booking_Profile(email.getText().toString(), password.getText().toString());
-                                        dao.add(bookingProfile);
-                                    }
-                                    // Inform user if they already have an account
-                                    else {
-                                        Toast.makeText(Login_Screen.this, "User already exists", Toast.LENGTH_LONG).show();
-                                    }
                                 }
-                            }
-                        });
-                    }
-                });
+                            });
+                        }
+                    });
+                }
             }
         });
         returnLogin.setOnClickListener(view -> {
