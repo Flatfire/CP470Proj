@@ -49,6 +49,7 @@
             android:layout_height="48dp"
             android:layout_below="@id/bookingPassword"
             android:hint="@string/PasswordTitleReEnter"
+            android:inputType="textPassword"
             android:singleLine="true"
             android:visibility="gone"/>
 

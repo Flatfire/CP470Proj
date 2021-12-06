@@ -76,6 +76,7 @@
     <string name="label_weight_log">Weight Log</string>
     <string name="BookFormTitle">Book Facilities</string>
     <string name="LabelFacility">Facility</string>
+    <string name="LabelBuilding">Building</string>
     <string name="LabelDate">Date</string>
     <string name="LabelTime">Time</string>
     <string name="LabelFrom">From:</string>

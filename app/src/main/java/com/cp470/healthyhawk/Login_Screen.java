@@ -38,6 +38,8 @@ public class Login_Screen extends AppCompatActivity {
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         Button returnLogin = findViewById(R.id.returnLogin);
         DAOprofile dao = new DAOprofile();
+
+        // Login verification
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,7 +70,9 @@ public class Login_Screen extends AppCompatActivity {
                             if (registered) {
                                 Toast.makeText(Login_Screen.this, "Logged in", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(Login_Screen.this, Book_Facilities.class);
-                                startActivityForResult(intent, 10);
+                                intent.putExtra("email", email.getText());
+                                startActivity(intent);
+                                finish();
                             }
                             else{
                                 Toast.makeText(Login_Screen.this, "Password incorrect or User nonexistent", Toast.LENGTH_LONG).show();
@@ -85,6 +89,7 @@ public class Login_Screen extends AppCompatActivity {
                 confirmPass.setVisibility(View.VISIBLE);
                 returnLogin.setVisibility(View.VISIBLE);
             }
+            // User registration block
             if(email.getText().toString().matches("") & password.getText().toString().matches("")) {
                 Toast.makeText(Login_Screen.this, "Please enter data", Toast.LENGTH_LONG).show();
             }
@@ -116,8 +121,6 @@ public class Login_Screen extends AppCompatActivity {
                                     if (!registered) {
                                         Booking_Profile bookingProfile = new Booking_Profile(email.getText().toString(), password.getText().toString());
                                         dao.add(bookingProfile);
-                                        Intent intent = new Intent(Login_Screen.this, Login_Screen.class);
-                                        startActivityForResult(intent, 10);
                                     }
                                     // Inform user if they already have an account
                                     else {
