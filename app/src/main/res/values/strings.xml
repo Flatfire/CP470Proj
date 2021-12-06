@@ -9,7 +9,6 @@
     <string name="preference_key_height_unit">user_height_unit</string>
     <string name="preference_key_weight">user_weight</string>
     <string name="preference_key_weight_unit">user_weight_unit</string>
-    <string name="preference_key_weight_goal">user_weight_goal</string>
 
     <!-- String Lists -->
     <string-array name="Genders">
@@ -77,12 +76,14 @@
     <string name="label_weight_log">Weight Log</string>
     <string name="BookFormTitle">Book Facilities</string>
     <string name="LabelFacility">Facility</string>
+    <string name="LabelBuilding">Building</string>
     <string name="LabelDate">Date</string>
     <string name="LabelTime">Time</string>
     <string name="LabelFrom">From:</string>
     <string name="LabelTo">To:</string>
     <string name="ButtonSubmitBooking">Submit Booking Request</string>
     <string name="label_book_facilities">Book Facilities</string>
+    <string name="BookingDialogSuccess">Facility Booked</string>
 
     <!-- Weight log Activity Values -->
     <string name="WeightChartTitle">Your Progress</string>
