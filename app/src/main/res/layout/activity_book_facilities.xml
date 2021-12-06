@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Login_Screen">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/notLoggedIn"
         android:layout_width="match_parent"
@@ -20,9 +21,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:context=".Login_Screen">
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <LinearLayout
                 android:id="@+id/formBookFacility"
                 android:layout_width="match_parent"
@@ -92,18 +95,20 @@
                         android:layout_height="wrap_content"
                         android:text="@string/LabelFrom" />
 
-                    <EditText
-                        android:id="@+id/editTimeFrom"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:inputType="time" />
+                    <Spinner
+                        android:id="@+id/hourFrom"
+                        android:layout_width="110dp"
+                        android:layout_height="45dp" />
+
+                    <Spinner
+                        android:id="@+id/halfFrom"
+                        android:layout_width="110dp"
+                        android:layout_height="match_parent" />
 
                     <Spinner
                         android:id="@+id/spinnerFromAmPm"
-                        android:layout_width="160dp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="90dp"
+                        android:layout_height="match_parent"
                         android:entries="@array/AmPm" />
 
                 </LinearLayout>
@@ -119,19 +124,18 @@
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
                         android:text="@string/LabelTo" />
-
-                    <EditText
-                        android:id="@+id/editTimeTo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:inputType="time" />
-
+                    <Spinner
+                        android:id="@+id/hourTo"
+                        android:layout_width="110dp"
+                        android:layout_height="45dp" />
+                    <Spinner
+                        android:id="@+id/halfTo"
+                        android:layout_width="110dp"
+                        android:layout_height="match_parent" />
                     <Spinner
                         android:id="@+id/spinnerToAmPm"
-                        android:layout_width="160dp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="90dp"
+                        android:layout_height="45dp"
                         android:entries="@array/AmPm" />
                 </LinearLayout>
 
@@ -145,7 +149,6 @@
             </LinearLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

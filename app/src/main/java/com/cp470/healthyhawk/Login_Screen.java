@@ -70,7 +70,7 @@ public class Login_Screen extends AppCompatActivity {
                             if (registered) {
                                 Toast.makeText(Login_Screen.this, "Logged in", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(Login_Screen.this, Book_Facilities.class);
-                                intent.putExtra("email", email.getText());
+                                intent.putExtra("email", email.getText().toString());
                                 startActivity(intent);
                                 finish();
                             }
