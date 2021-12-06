@@ -11,6 +11,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -108,6 +111,29 @@ public class Home_Screen extends AppCompatActivity {
         });
         AlertDialog alert=builder.create();
         alert.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // inflate the home menu featuring Help button in Action Bar
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // display help dialog when pressed
+        if (item.getItemId() == R.id.action_help) {
+            // inflate Help screen from layout
+            LayoutInflater inflater = getLayoutInflater();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setView(inflater.inflate(R.layout.dialog_app_help, null));
+            AlertDialog alert = builder.create();
+            alert.show();
+            return true;
+        } else
+            return super.onOptionsItemSelected(item);
     }
 
     private void populateHomeScreen() {

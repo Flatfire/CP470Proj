@@ -11,6 +11,17 @@
     <string name="preference_key_weight_unit">user_weight_unit</string>
     <string name="preference_key_weight_goal">user_weight_goal</string>
 
+    <!-- Weight log Activity Values -->
+    <string name="WeightChartTitle">Your Progress</string>
+    <string name="CurrentWeightTitleText">Currently:</string>
+    <string name="GoalWeightTitleText">Goal:</string>
+    <string name="LogWeightButtonText">Log New Weight</string>
+    <string name="SetGoalButtonText">Set New Goal</string>
+    <string name="LogWeightDialogTitle">Log New Weight</string>
+    <string name="LogGoalWeightDialogTitle">Set New Goal</string>
+    <string name="LogWeightDialogSave">Save</string>
+    <string name="LogWeightDialogCancel">Cancel</string>
+
     <!-- String Lists -->
     <string-array name="Genders">
         <item>Woman</item>
@@ -38,7 +49,7 @@
     </string-array>
 
     <!-- Unsorted, All Other Strings -->
-    <string name="app_name">Healthy Hawk</string>
+    <string name="app_name">HealthyHawk</string>
     <string name="LoginTitle">Login</string>
     <string name="ExerciseLogTitle">Exercise Log</string>
     <string name="BookFacilitiesTitle">Book Facilities</string>
@@ -85,15 +96,10 @@
     <string name="ButtonSubmitBooking">Submit Booking Request</string>
     <string name="label_book_facilities">Book Facilities</string>
     <string name="BookingDialogSuccess">Facility Booked</string>
-
-    <!-- Weight log Activity Values -->
-    <string name="WeightChartTitle">Your Progress</string>
-    <string name="CurrentWeightTitleText">Currently:</string>
-    <string name="GoalWeightTitleText">Goal:</string>
-    <string name="LogWeightButtonText">Log New Weight</string>
-    <string name="SetGoalButtonText">Set New Goal</string>
-    <string name="LogWeightDialogTitle">Log New Weight</string>
-    <string name="LogGoalWeightDialogTitle">Set New Goal</string>
-    <string name="LogWeightDialogSave">Save</string>
-    <string name="LogWeightDialogCancel">Cancel</string>
+    <string name="action_help">Help</string>
+    <string name="app_version">Version 1.0</string>
+    <string name="AuthorsLabel">Developed By:</string>
+    <string name="InstructionsLabel">Instructions:</string>
+    <string name="Instructions">After setting up a profile, users can use HealthyHawk to track their weight over time, set goals, track recent fitness activities, and book Wilfrid Laurier Athletic facilities right from the app.</string>
+    <string name="AuthorsListed">Greg Savage, Ilija Milisav, Judy Praught, Kelvin Kellner, and Taya Elezi.</string>
 </resources>

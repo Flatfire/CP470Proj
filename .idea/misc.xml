@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/drawable/ic_outline_help_24.xml" value="0.1" />
+        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/dialog_app_help.xml" value="0.264" />
+        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/dialog_hdlp.xml" value="0.1711065573770492" />
+        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/menu/home_action_menu.xml" value="0.190625" />
+        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/menu/menu_home.xml" value="0.190625" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2140625" />
         <entry key="app/src/main/res/layout/activity_book_facilities.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_home_screen.xml" value="0.29257246376811596" />
