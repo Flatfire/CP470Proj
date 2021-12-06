@@ -84,4 +84,15 @@
     <string name="ButtonSubmitBooking">Submit Booking Request</string>
     <string name="label_book_facilities">Book Facilities</string>
     <string name="BookingDialogSuccess">Facility Booked</string>
+
+    <!-- Weight log Activity Values -->
+    <string name="WeightChartTitle">Your Progress</string>
+    <string name="CurrentWeightTitleText">Currently:</string>
+    <string name="GoalWeightTitleText">Goal:</string>
+    <string name="LogWeightButtonText">Log New Weight</string>
+    <string name="SetGoalButtonText">Set New Goal</string>
+    <string name="LogWeightDialogTitle">Log New Weight</string>
+    <string name="LogGoalWeightDialogTitle">Set New Goal</string>
+    <string name="LogWeightDialogSave">Save</string>
+    <string name="LogWeightDialogCancel">Cancel</string>
 </resources>
