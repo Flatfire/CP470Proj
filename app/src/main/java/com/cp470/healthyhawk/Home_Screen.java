@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -34,6 +35,7 @@ public class Home_Screen extends AppCompatActivity {
     TextView textHeight;
     TextView textNickname;
     TextView textWeight;
+    Toolbar toolbarMenuHome;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,7 @@ public class Home_Screen extends AppCompatActivity {
         textHeight = findViewById(R.id.textHomeHeight);
         textNickname = findViewById(R.id.textHomeNickname);
         textWeight = findViewById(R.id.textHomeWeight);
+        toolbarMenuHome = findViewById(R.id.toolbarMenuHome);
 
         // Check if User Data exists otherwise launch User Introduction Activity
 
@@ -84,6 +87,10 @@ public class Home_Screen extends AppCompatActivity {
             Intent intent = new Intent(Home_Screen.this, Login_Screen.class);
             startActivityForResult(intent, LAUNCH_LOGIN);
         });
+
+        // Set Toolbar Menu as Action Bar
+
+        setSupportActionBar(toolbarMenuHome);
     }
     // Check for data returned by activity results
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

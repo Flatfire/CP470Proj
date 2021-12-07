@@ -35,7 +35,8 @@
         <activity
             android:name=".Home_Screen"
             android:exported="true"
-            android:label="@string/label_home_screen" />
+            android:label="@string/label_home_screen"
+            android:theme="@style/Theme.HealthyHawk.NoActionBar" />
         <activity
             android:name=".Main_Activity"
             android:exported="true"
