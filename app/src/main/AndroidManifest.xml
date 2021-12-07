@@ -11,7 +11,9 @@
         android:theme="@style/Theme.HealthyHawk" >
         <activity
             android:name=".Login_Screen"
-            android:exported="true" />
+            android:exported="true"
+            android:label="@string/label_login_screen"
+            android:parentActivityName=".Home_Screen" />
         <activity
             android:name=".User_Introduction"
             android:exported="true"

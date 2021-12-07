@@ -102,4 +102,5 @@
     <string name="InstructionsLabel">Instructions:</string>
     <string name="Instructions">After setting up a profile, users can use HealthyHawk to track their weight over time, set goals, track recent fitness activities, and book Wilfrid Laurier Athletic facilities right from the app.</string>
     <string name="AuthorsListed">Greg Savage, Ilija Milisav, Judy Praught, Kelvin Kellner, and Taya Elezi.</string>
+    <string name="label_login_screen">Login</string>
 </resources>
