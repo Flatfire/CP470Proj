@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -49,9 +50,16 @@ public class Exercise_Log extends AppCompatActivity {
     int indexStatName;
     int indexDateTime;
 
+    // Fragment
+    boolean fragmentExists;
+    FrameLayout fragmentPanel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Check if Fragment exists
+        fragmentExists = findViewById(R.id.fragmentPanel) != null;
 
         // Setup Fab to launch Add_New_Exercise Activity
         ActivityExerciseLogBinding binding = ActivityExerciseLogBinding.inflate(getLayoutInflater());
@@ -153,25 +161,8 @@ public class Exercise_Log extends AppCompatActivity {
             textDateTime.setText(clickedItemDateTime);
 
             // Update Button onClick
-//            Button buttonDeleteActivity = inflatedView.findViewById(R.id.buttonDialogDeleteActivity);
-//            buttonDeleteActivity.setOnClickListener(buttonView -> {
             builder.setNegativeButton(R.string.delete, (dialogInterface, i) -> {
-                // Delete from ArrayLists
-                activityType.remove(position);
-                activityStatNum.remove(position);
-                activityStatName.remove(position);
-                activityDateTime.remove(position);
-                activityList.remove(position);
-                // Delete from database
-                db.delete(
-                    ExerciseLogDatabaseHelper.TABLE_NAME,
-                    ExerciseLogDatabaseHelper.KEY_TYPE + "=\"" + clickedItemType + "\" and "
-                        + ExerciseLogDatabaseHelper.KEY_STAT_NUM + "=\"" + clickedItemStatNum + "\" and "
-                        + ExerciseLogDatabaseHelper.KEY_STAT_NAME + "=\"" + clickedItemStatName + "\" and "
-                        + ExerciseLogDatabaseHelper.KEY_DATE_TIME + "=\"" + clickedItemDateTime + "\""
-                    , null);
-                // Update View
-                adapter.notifyDataSetChanged();
+                deleteExercise(position, clickedItemType, clickedItemStatNum, clickedItemStatName, clickedItemDateTime);
             });
 
             // Build AlertDialog
@@ -238,6 +229,25 @@ public class Exercise_Log extends AppCompatActivity {
         db.close();
         dbHelper.close();
         super.onDestroy();
+    }
+
+    public void deleteExercise(int position, String type, String statNum, String statName, String dateTime) {
+        // Delete from ArrayLists
+        activityType.remove(position);
+        activityStatNum.remove(position);
+        activityStatName.remove(position);
+        activityDateTime.remove(position);
+        activityList.remove(position);
+        // Delete from database
+        db.delete(
+                ExerciseLogDatabaseHelper.TABLE_NAME,
+                ExerciseLogDatabaseHelper.KEY_TYPE + "=\"" + type + "\" and "
+                        + ExerciseLogDatabaseHelper.KEY_STAT_NUM + "=\"" + statNum + "\" and "
+                        + ExerciseLogDatabaseHelper.KEY_STAT_NAME + "=\"" + statName + "\" and "
+                        + ExerciseLogDatabaseHelper.KEY_DATE_TIME + "=\"" + dateTime + "\""
+                , null);
+        // Update View
+        adapter.notifyDataSetChanged();
     }
 }
 
