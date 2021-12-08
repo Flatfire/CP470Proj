@@ -1,4 +1,4 @@
-<resources>
+<?xml version="1.0" encoding="utf-8"?><resources>
     <!--SharedPreferences File Variables-->
     <string name="preference_file_name">healthyhawk_app_preferences</string>
     <string name="preference_key_is_registered">bool_is_registered</string>
@@ -73,10 +73,10 @@
         <item>Lunges</item>
     </string-array>
     <string-array name="exerciseStatName">
-        <item>km</item>
         <item>miles</item>
-        <item>kgs</item>
+        <item>km</item>
         <item>lbs</item>
+        <item>kgs</item>
         <item>Seconds</item>
         <item>Minutes</item>
         <item>Hours</item>
