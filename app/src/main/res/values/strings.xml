@@ -21,6 +21,7 @@
     <string name="LogGoalWeightDialogTitle">Set New Goal</string>
     <string name="LogWeightDialogSave">Save</string>
     <string name="LogWeightDialogCancel">Cancel</string>
+    <string name="WeightLogEmptyMessage">Enter a weight to get started…</string>
 
     <!-- String Lists -->
     <string-array name="Genders">
