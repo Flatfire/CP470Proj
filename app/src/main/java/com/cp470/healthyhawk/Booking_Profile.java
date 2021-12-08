@@ -2,6 +2,10 @@ package com.cp470.healthyhawk;
 
 import com.google.firebase.database.Exclude;
 
+/**
+ * Booking profile class used to construct user objects to be submitted to the
+ * Firebase RTDB
+ */
 public class Booking_Profile {
     private String email;
     private String password;

@@ -3,35 +3,29 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/drawable/ic_menu_outline_building_24.xml" value="0.1" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/drawable/ic_menu_outline_scale_24.xml" value="0.1" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/drawable/ic_outline_cake_24.xml" value="0.1" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/drawable/ic_outline_help_24.xml" value="0.1" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/drawable/ic_outline_monitor_weight_24.xml" value="0.1" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/activity_add_new_exercise.xml" value="0.2" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/activity_book_facilities.xml" value="0.16734972677595628" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/activity_exercise_log.xml" value="0.16734972677595628" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/activity_home_screen.xml" value="0.176" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/activity_login_screen.xml" value="0.16734972677595628" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/activity_user_introduction.xml" value="0.16734972677595628" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/activity_weight_log.xml" value="0.16734972677595628" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/dialog_app_help.xml" value="0.264" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/dialog_exercise_info.xml" value="0.264" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/dialog_exercise_log_info.xml" value="0.264" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/dialog_hdlp.xml" value="0.1711065573770492" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/dialog_log_goal_weight.xml" value="0.16734972677595628" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/dialog_log_weight.xml" value="0.16734972677595628" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/dialog_new_exercise.xml" value="0.1" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/layout/layout_single_activity.xml" value="0.264" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/menu/home_action_menu.xml" value="0.190625" />
-        <entry key="..\:/GitHub/CP470Proj/app/src/main/res/menu/menu_home.xml" value="0.190625" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2140625" />
-        <entry key="app/src/main/res/layout/activity_book_facilities.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_home_screen.xml" value="0.29257246376811596" />
-        <entry key="app/src/main/res/layout/activity_login_screen.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_weight_log.xml" value="0.19583333333333333" />
-        <entry key="app/src/main/res/layout/dialog_log_goal_weight.xml" value="0.37604166666666666" />
-        <entry key="app/src/main/res/layout/dialog_log_weight.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/drawable/ic_menu_outline_building_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_menu_outline_scale_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_outline_cake_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_outline_help_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_outline_monitor_weight_24.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_add_new_exercise.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/activity_book_facilities.xml" value="0.16734972677595628" />
+        <entry key="app/src/main/res/layout/activity_exercise_log.xml" value="0.16734972677595628" />
+        <entry key="app/src/main/res/layout/activity_home_screen.xml" value="0.176" />
+        <entry key="app/src/main/res/layout/activity_login_screen.xml" value="0.16734972677595628" />
+        <entry key="app/src/main/res/layout/activity_user_introduction.xml" value="0.16734972677595628" />
+        <entry key="app/src/main/res/layout/activity_weight_log.xml" value="0.16734972677595628" />
+        <entry key="app/src/main/res/layout/dialog_app_help.xml" value="0.264" />
+        <entry key="app/src/main/res/layout/dialog_exercise_info.xml" value="0.264" />
+        <entry key="app/src/main/res/layout/dialog_exercise_log_info.xml" value="0.264" />
+        <entry key="app/src/main/res/layout/dialog_hdlp.xml" value="0.1711065573770492" />
+        <entry key="app/src/main/res/layout/dialog_log_goal_weight.xml" value="0.16734972677595628" />
+        <entry key="app/src/main/res/layout/dialog_log_weight.xml" value="0.16734972677595628" />
+        <entry key="app/src/main/res/layout/dialog_new_exercise.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/layout_single_activity.xml" value="0.264" />
+        <entry key="app/src/main/res/menu/home_action_menu.xml" value="0.190625" />
+        <entry key="app/src/main/res/menu/menu_home.xml" value="0.190625" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/healthyhawk_launcher.xml" value="0.2140625" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/healthyhawk_launcher_round.xml" value="0.2140625" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2140625" />
@@ -39,5 +33,8 @@
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/app" />
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>

@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +38,10 @@ public class Home_Screen extends AppCompatActivity {
     TextView textWeight;
     Toolbar toolbarMenuHome;
 
+    /**
+     * Build layout and initialize elements of home screen
+     * @param savedInstanceState
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
@@ -65,7 +70,7 @@ public class Home_Screen extends AppCompatActivity {
             Intent intent = new Intent(Home_Screen.this, User_Introduction.class);
             startActivityForResult(intent, LAUNCH_USER_INTRODUCTION);
         } else {
-            populateHomeScreen();
+            new homeData().execute();
         }
 
         // Setup Home Screen Navigation
@@ -92,17 +97,26 @@ public class Home_Screen extends AppCompatActivity {
 
         setSupportActionBar(toolbarMenuHome);
     }
-    // Check for data returned by activity results
+
+    /**
+     * // Check for data returned by activity results
+     * @param requestCode code provided to returning activity
+     * @param resultCode code returned by returning activity
+     * @param data  data returned by returning activity
+     */
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // Check for appropriate response from user introduction activity
         if (requestCode == LAUNCH_USER_INTRODUCTION) {
             if (resultCode == Activity.RESULT_OK) {
-                populateHomeScreen();
+                new homeData().execute();
             }
         }
     }
 
+    /**
+     * Produce a dialogue when android navigation back button is pressed that prompts the user to exit
+     */
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -120,6 +134,11 @@ public class Home_Screen extends AppCompatActivity {
         alert.show();
     }
 
+    /**
+     * Inflate menu view from stored menu layout
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -128,6 +147,11 @@ public class Home_Screen extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Triggers menu action based on user selection
+     * @param item Selected menu item from home screen
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
@@ -158,42 +182,55 @@ public class Home_Screen extends AppCompatActivity {
         }
     }
 
-    private void populateHomeScreen() {
-        String preference_file_name = getString(R.string.preference_file_name);
-        SharedPreferences mPrefs = getSharedPreferences(preference_file_name, MODE_PRIVATE);
+    /**
+     * Get User data to populate homescreen
+     */
+    public class homeData extends AsyncTask<Void,Void,Void> {
+        /**
+         * Populates home screen with user data in background
+         *
+         * @param voids
+         * @return
+         */
+        @Override
+        protected Void doInBackground(Void... voids) {
+            String preference_file_name = getString(R.string.preference_file_name);
+            SharedPreferences mPrefs = getSharedPreferences(preference_file_name, MODE_PRIVATE);
 
-        String key_nickname = getString(R.string.preference_key_nickname);
-        String welcome_string = "Hi, " + mPrefs.getString(key_nickname,"");
-        textNickname.setText(welcome_string);
+            String key_nickname = getString(R.string.preference_key_nickname);
+            String welcome_string = "Hi, " + mPrefs.getString(key_nickname, "");
+            textNickname.setText(welcome_string);
 
-        String key_age = getString(R.string.preference_key_age);
-        String age =
-                mPrefs.getString(key_age, "0")
-                + " "
-                + "years";
-        textAge.setText(age);
+            String key_age = getString(R.string.preference_key_age);
+            String age =
+                    mPrefs.getString(key_age, "0")
+                            + " "
+                            + "years";
+            textAge.setText(age);
 
-        // Show gender if not "Prefer not to say"
-        String key_gender = getString(R.string.preference_key_gender);
-        if (mPrefs.getString(key_gender, "Prefer not to say").compareTo("Prefer not to say")
-                != 0) {
-            textGender.setText("Gender: " + mPrefs.getString(key_gender, ""));
+            // Show gender if not "Prefer not to say"
+            String key_gender = getString(R.string.preference_key_gender);
+            if (mPrefs.getString(key_gender, "Prefer not to say").compareTo("Prefer not to say")
+                    != 0) {
+                textGender.setText("Gender: " + mPrefs.getString(key_gender, ""));
+            }
+
+            String key_height = getString(R.string.preference_key_height);
+            String key_height_unit = getString(R.string.preference_key_height_unit);
+            String height =
+                    mPrefs.getString(key_height, "0")
+                            + " "
+                            + mPrefs.getString(key_height_unit, "");
+            textHeight.setText(height);
+
+            String key_weight = getString(R.string.preference_key_weight);
+            String key_weight_unit = getString(R.string.preference_key_weight_unit);
+            String weight =
+                    mPrefs.getString(key_weight, "0")
+                            + " "
+                            + mPrefs.getString(key_weight_unit, "");
+            textWeight.setText(weight);
+            return null;
         }
-
-        String key_height = getString(R.string.preference_key_height);
-        String key_height_unit = getString(R.string.preference_key_height_unit);
-        String height =
-                mPrefs.getString(key_height, "0")
-                + " "
-                + mPrefs.getString(key_height_unit, "");
-        textHeight.setText(height);
-
-        String key_weight = getString(R.string.preference_key_weight);
-        String key_weight_unit = getString(R.string.preference_key_weight_unit);
-        String weight =
-                mPrefs.getString(key_weight, "0")
-                + " "
-                + mPrefs.getString(key_weight_unit, "");
-        textWeight.setText(weight);
     }
 }
