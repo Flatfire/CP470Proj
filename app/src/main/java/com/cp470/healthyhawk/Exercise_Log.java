@@ -135,7 +135,7 @@ public class Exercise_Log extends AppCompatActivity {
 
         // Display message if no reported activities
         if (activityType.size() == 0) {
-            Snackbar.make(findViewById(R.id.layoutExerciseLogContainer), getString(R.string.no_exercise_log_history), Snackbar.LENGTH_LONG)
+            Snackbar.make(findViewById(R.id.layoutExerciseLog), getString(R.string.no_exercise_log_history), Snackbar.LENGTH_LONG)
                     .setAction("No Exercise History", null).show();
         }
 
