@@ -107,12 +107,12 @@ public class Home_Screen extends AppCompatActivity {
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
-        builder.setMessage("Do you want to Exit?");
-        builder.setPositiveButton("Yes", (dialog, which) -> {
+        builder.setMessage(R.string.ask_before_exit_app);
+        builder.setPositiveButton(R.string.yes, (dialog, which) -> {
             //if user pressed "yes", then he is allowed to exit from application
             finish();
         });
-        builder.setNegativeButton("No", (dialog, which) -> {
+        builder.setNegativeButton(R.string.no, (dialog, which) -> {
             //if user select "No", just cancel this dialog and continue with app
             dialog.cancel();
         });

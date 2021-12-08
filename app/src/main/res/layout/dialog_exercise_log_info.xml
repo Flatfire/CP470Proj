@@ -36,7 +36,6 @@
         android:text="##"
         android:textColor="@android:color/primary_text_light"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/buttonDialogDeleteActivity"
         app:layout_constraintEnd_toStartOf="@+id/textDialogActivityStatName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textDialogActivityType" />
@@ -45,24 +44,13 @@
         android:id="@+id/textDialogActivityStatName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
         android:paddingLeft="3dp"
         android:text="stat"
         android:textColor="@android:color/primary_text_light"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/buttonDialogDeleteActivity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/textDialogActivityStatNum"
-        app:layout_constraintTop_toBottomOf="@id/textDialogActivityType"
-        app:layout_constraintVertical_bias="0.85" />
-
-    <Button
-        android:id="@+id/buttonDialogDeleteActivity"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/ButtonDelete"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textDialogActivityStatNum" />
+        app:layout_constraintTop_toBottomOf="@id/textDialogActivityType" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

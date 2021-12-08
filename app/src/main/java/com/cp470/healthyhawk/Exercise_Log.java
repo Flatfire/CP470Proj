@@ -2,7 +2,7 @@ package com.cp470.healthyhawk;
 
 import android.app.Activity;
 import android.content.ContentValues;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,24 +10,21 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cp470.healthyhawk.databinding.ActivityExerciseLogBinding;
 
-import java.lang.reflect.Array;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Exercise_Log extends AppCompatActivity {
@@ -36,7 +33,6 @@ public class Exercise_Log extends AppCompatActivity {
     public static final int LAUNCH_NEW_EXERCISE = 31;
 
     // Variables
-    private ActivityExerciseLogBinding binding;
     ListView listView;
     ExerciseLogDatabaseHelper dbHelper;
     SQLiteDatabase db;
@@ -58,7 +54,7 @@ public class Exercise_Log extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Setup Fab to launch Add_New_Exercise Activity
-        binding = ActivityExerciseLogBinding.inflate(getLayoutInflater());
+        ActivityExerciseLogBinding binding = ActivityExerciseLogBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         binding.fabAddExercise.setOnClickListener(view -> {
             Intent intent = new Intent(Exercise_Log.this, Add_New_Exercise.class);
@@ -144,6 +140,7 @@ public class Exercise_Log extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             View inflatedView = inflater.inflate(R.layout.dialog_exercise_log_info, null);
             builder.setView(inflatedView);
+            AlertDialog alert;
 
             // Update TextViews
             TextView textType = inflatedView.findViewById(R.id.textDialogActivityType);
@@ -155,11 +152,42 @@ public class Exercise_Log extends AppCompatActivity {
             textStatName.setText(clickedItemStatName);
             textDateTime.setText(clickedItemDateTime);
 
-            // Show Dialog
-            AlertDialog alert = builder.create();
+            // Update Button onClick
+//            Button buttonDeleteActivity = inflatedView.findViewById(R.id.buttonDialogDeleteActivity);
+//            buttonDeleteActivity.setOnClickListener(buttonView -> {
+            builder.setNegativeButton(R.string.delete, (dialogInterface, i) -> {
+                // Delete from ArrayLists
+                activityType.remove(position);
+                activityStatNum.remove(position);
+                activityStatName.remove(position);
+                activityDateTime.remove(position);
+                activityList.remove(position);
+                // Delete from database
+                db.delete(
+                    ExerciseLogDatabaseHelper.TABLE_NAME,
+                    ExerciseLogDatabaseHelper.KEY_TYPE + "=\"" + clickedItemType + "\" and "
+                        + ExerciseLogDatabaseHelper.KEY_STAT_NUM + "=\"" + clickedItemStatNum + "\" and "
+                        + ExerciseLogDatabaseHelper.KEY_STAT_NAME + "=\"" + clickedItemStatName + "\" and "
+                        + ExerciseLogDatabaseHelper.KEY_DATE_TIME + "=\"" + clickedItemDateTime + "\""
+                    , null);
+                // Update View
+                adapter.notifyDataSetChanged();
+            });
+
+            // Build AlertDialog
+            alert = builder.create();
+            // Fix Button width to match parent
+            alert.setOnShowListener(dialogInterface -> {
+                Button button = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+                ViewGroup.LayoutParams params = button.getLayoutParams();
+                params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                button.setLayoutParams(params);
+            });
+            // Show AlertDialog
             alert.show();
-            Log.i("KEY", "Your selected item is " + clickedItemType + ", " + clickedItemStatNum + " " + clickedItemStatName);
         });
+
+        // Update View
         adapter.notifyDataSetChanged();
     }
 
@@ -182,7 +210,7 @@ public class Exercise_Log extends AppCompatActivity {
             cValues.put(ExerciseLogDatabaseHelper.KEY_STAT_NUM, newItemActivityStatNum);
             cValues.put(ExerciseLogDatabaseHelper.KEY_STAT_NAME, newItemActivityStatName);
             cValues.put(ExerciseLogDatabaseHelper.KEY_DATE_TIME, newItemActivityDateTime);
-            long insertId = db.insert(ExerciseLogDatabaseHelper.TABLE_NAME, "Not Given", cValues);
+            db.insert(ExerciseLogDatabaseHelper.TABLE_NAME, "Not Given", cValues);
 
             // Store in ArrayLists
             activityType.add(newItemActivityType);
@@ -205,8 +233,8 @@ public class Exercise_Log extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        // Close db
         Log.i(ACTIVITY_NAME, "In onDestroy()");
+        // Close db
         db.close();
         dbHelper.close();
         super.onDestroy();

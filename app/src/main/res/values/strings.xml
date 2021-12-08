@@ -72,15 +72,16 @@
         <item>Lunges</item>
     </string-array>
     <string-array name="exerciseStatName">
-        <item>Km Travelled</item>
-        <item>Miles Travelled</item>
-        <item>Sets Completed</item>
-        <item>Reps Completed</item>
-        <item>Exercises Completed</item>
-        <item>Lbs Lifted</item>
-        <item>Kg Lifted</item>
-        <item>Calories Burned</item>
+        <item>km</item>
+        <item>miles</item>
+        <item>lbs</item>
+        <item>kgs</item>
+        <item>Seconds</item>
         <item>Minutes</item>
+        <item>Hours</item>
+        <item>Calories</item>
+        <item>Sets</item>
+        <item>Reps</item>
     </string-array>
 
     <!-- Unsorted, All Other Strings -->
@@ -145,4 +146,8 @@
     <string name="LabelExerciseStatName">Unit</string>
     <string name="label_add_new_exercise">Log New Exercise Activity</string>
     <string name="no_quantity_entered">Please enter a quantity (field cannot be blank).</string>
+    <string name="delete">Delete</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="ask_before_exit_app">Do you want to Exit?</string>
 </resources>
