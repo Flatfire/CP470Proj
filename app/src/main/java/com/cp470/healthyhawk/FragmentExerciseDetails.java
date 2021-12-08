@@ -1,5 +1,7 @@
 package com.cp470.healthyhawk;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +53,7 @@ public class FragmentExerciseDetails extends Fragment {
             // Set Button onClickListener
             buttonDelete.setOnClickListener((buttonView) -> {
                 exerciseLog.deleteExercise(position, type, statNum, statName, dateTime);
-                getActivity().finish();
+                exerciseLog.reinitFragment();
             });
         }
         return view;

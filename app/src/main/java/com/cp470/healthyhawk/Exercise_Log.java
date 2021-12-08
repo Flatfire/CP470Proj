@@ -21,6 +21,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.cp470.healthyhawk.databinding.ActivityExerciseLogBinding;
 
@@ -57,17 +58,22 @@ public class Exercise_Log extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Check if Fragment exists
-        fragmentExists = findViewById(R.id.fragmentPanel) != null;
-
-        // Setup Fab to launch Add_New_Exercise Activity
+        // Bind for fab
         ActivityExerciseLogBinding binding = ActivityExerciseLogBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        binding.fabAddExercise.setOnClickListener(view -> {
-            Intent intent = new Intent(Exercise_Log.this, Add_New_Exercise.class);
-            startActivityForResult(intent, LAUNCH_NEW_EXERCISE);
-        });
+
+        // Check if Fragment exists
+        fragmentPanel = findViewById(R.id.fragmentPanel);
+        fragmentExists = fragmentPanel != null;
+        Log.i(ACTIVITY_NAME, "Fragment Exists: " + fragmentExists);
+
+        // Load initial Fragment
+        if (savedInstanceState == null && fragmentExists) {
+            FragmentEmpty init = new FragmentEmpty();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.add(R.id.fragmentPanel, init);
+            ft.commit();
+        }
 
         // Init ArrayLists for activity data points
         activityType = new ArrayList<>();
@@ -103,6 +109,23 @@ public class Exercise_Log extends AppCompatActivity {
         }
         cursor.close();
 
+        // Setup Fab to launch Add_New_Exercise Activity
+        binding.fabAddExercise.setOnClickListener(view -> {
+            if (fragmentExists) {
+                // Call constructor
+                FragmentNewExercise newExercise = new FragmentNewExercise(Exercise_Log.this);
+
+                // Load new exercise fragment into fragmentPanel via FragmentNewExercise
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.fragmentPanel, newExercise);
+                ft.addToBackStack(null);
+                ft.commit();
+            } else {
+                Intent intent = new Intent(Exercise_Log.this, Add_New_Exercise.class);
+                startActivityForResult(intent, LAUNCH_NEW_EXERCISE);
+            }
+        });
+
         // Setup ListView using SimpleAdapter
 
         // Help used from following link to extend logic from simple 1d String List to HashMap:
@@ -112,7 +135,7 @@ public class Exercise_Log extends AppCompatActivity {
 
         // Display message if no reported activities
         if (activityType.size() == 0) {
-            Snackbar.make(findViewById(R.id.layoutExerciseLog), getString(R.string.no_exercise_log_history), Snackbar.LENGTH_LONG)
+            Snackbar.make(findViewById(R.id.layoutExerciseLogContainer), getString(R.string.no_exercise_log_history), Snackbar.LENGTH_LONG)
                     .setAction("No Exercise History", null).show();
         }
 
@@ -136,46 +159,72 @@ public class Exercise_Log extends AppCompatActivity {
 
         // Display popup with more info when item is pressed
         listView.setOnItemClickListener((adapterView, view, position, id) -> {
-            HashMap clickedItemMap = (HashMap)adapterView.getAdapter().getItem(position);
+            if (fragmentExists) {
+                // Call constructor
+                FragmentExerciseDetails exerciseDetails = new FragmentExerciseDetails(Exercise_Log.this, position);
 
-            String clickedItemType = (String)clickedItemMap.get("activityType");
-            String clickedItemStatNum = (String)clickedItemMap.get("activityStatNum");
-            String clickedItemStatName = (String)clickedItemMap.get("activityStatName");
-            String clickedItemDateTime = (String)clickedItemMap.get("activityDateTime");
+                // Get data from clickedItem
+                HashMap clickedItemMap = (HashMap) adapterView.getAdapter().getItem(position);
+                String clickedItemType = (String) clickedItemMap.get("activityType");
+                String clickedItemStatNum = (String) clickedItemMap.get("activityStatNum");
+                String clickedItemStatName = (String) clickedItemMap.get("activityStatName");
+                String clickedItemDateTime = (String) clickedItemMap.get("activityDateTime");
 
-            // Inflate Activity Info to an AlertDialog
-            LayoutInflater inflater = getLayoutInflater();
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            View inflatedView = inflater.inflate(R.layout.dialog_exercise_log_info, null);
-            builder.setView(inflatedView);
-            AlertDialog alert;
+                // Add data as arguments
+                Bundle args = new Bundle();
+                args.putString(ExerciseLogDatabaseHelper.KEY_TYPE, clickedItemType);
+                args.putString(ExerciseLogDatabaseHelper.KEY_STAT_NUM, clickedItemStatNum);
+                args.putString(ExerciseLogDatabaseHelper.KEY_STAT_NAME, clickedItemStatName);
+                args.putString(ExerciseLogDatabaseHelper.KEY_DATE_TIME, clickedItemDateTime);
+                exerciseDetails.setArguments(args);
 
-            // Update TextViews
-            TextView textType = inflatedView.findViewById(R.id.textDialogActivityType);
-            TextView textStatNum = inflatedView.findViewById(R.id.textDialogActivityStatNum);
-            TextView textStatName =  inflatedView.findViewById(R.id.textDialogActivityStatName);
-            TextView textDateTime =  inflatedView.findViewById(R.id.textDialogActivityDateTime);
-            textType.setText(clickedItemType);
-            textStatNum.setText(clickedItemStatNum);
-            textStatName.setText(clickedItemStatName);
-            textDateTime.setText(clickedItemDateTime);
+                // Load message details into frameDisplayChat via MessageFragment
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.fragmentPanel, exerciseDetails);
+                ft.addToBackStack(null);
+                ft.commit();
+            } else {
+                // Get data from clickedItem
+                HashMap clickedItemMap = (HashMap) adapterView.getAdapter().getItem(position);
+                String clickedItemType = (String) clickedItemMap.get("activityType");
+                String clickedItemStatNum = (String) clickedItemMap.get("activityStatNum");
+                String clickedItemStatName = (String) clickedItemMap.get("activityStatName");
+                String clickedItemDateTime = (String) clickedItemMap.get("activityDateTime");
 
-            // Update Button onClick
-            builder.setNegativeButton(R.string.delete, (dialogInterface, i) -> {
-                deleteExercise(position, clickedItemType, clickedItemStatNum, clickedItemStatName, clickedItemDateTime);
-            });
+                // Inflate Activity Info to an AlertDialog
+                LayoutInflater inflater = getLayoutInflater();
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                View inflatedView = inflater.inflate(R.layout.dialog_exercise_log_info, null);
+                builder.setView(inflatedView);
+                AlertDialog alert;
 
-            // Build AlertDialog
-            alert = builder.create();
-            // Fix Button width to match parent
-            alert.setOnShowListener(dialogInterface -> {
-                Button button = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
-                ViewGroup.LayoutParams params = button.getLayoutParams();
-                params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                button.setLayoutParams(params);
-            });
-            // Show AlertDialog
-            alert.show();
+                // Update TextViews
+                TextView textType = inflatedView.findViewById(R.id.textDialogActivityType);
+                TextView textStatNum = inflatedView.findViewById(R.id.textDialogActivityStatNum);
+                TextView textStatName = inflatedView.findViewById(R.id.textDialogActivityStatName);
+                TextView textDateTime = inflatedView.findViewById(R.id.textDialogActivityDateTime);
+                textType.setText(clickedItemType);
+                textStatNum.setText(clickedItemStatNum);
+                textStatName.setText(clickedItemStatName);
+                textDateTime.setText(clickedItemDateTime);
+
+                // Update Button onClick
+                builder.setNegativeButton(R.string.delete, (dialogInterface, i) -> {
+                    deleteExercise(position, clickedItemType, clickedItemStatNum, clickedItemStatName, clickedItemDateTime);
+                });
+
+                // Build AlertDialog
+                alert = builder.create();
+                // Fix Button width to match parent
+                alert.setOnShowListener(dialogInterface -> {
+                    Button button = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+                    ViewGroup.LayoutParams params = button.getLayoutParams();
+                    params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                    button.setLayoutParams(params);
+                });
+                // Show AlertDialog
+                alert.show();
+            }
         });
 
         // Update View
@@ -195,30 +244,8 @@ public class Exercise_Log extends AppCompatActivity {
             String newItemActivityStatName = data.getStringExtra("activityStatName");
             String newItemActivityDateTime = data.getStringExtra("activityDateTime");
 
-            // Store in database
-            ContentValues cValues = new ContentValues();
-            cValues.put(ExerciseLogDatabaseHelper.KEY_TYPE, newItemActivityType);
-            cValues.put(ExerciseLogDatabaseHelper.KEY_STAT_NUM, newItemActivityStatNum);
-            cValues.put(ExerciseLogDatabaseHelper.KEY_STAT_NAME, newItemActivityStatName);
-            cValues.put(ExerciseLogDatabaseHelper.KEY_DATE_TIME, newItemActivityDateTime);
-            db.insert(ExerciseLogDatabaseHelper.TABLE_NAME, "Not Given", cValues);
-
-            // Store in ArrayLists
-            activityType.add(newItemActivityType);
-            activityStatNum.add(newItemActivityStatNum);
-            activityStatName.add(newItemActivityStatName);
-            activityDateTime.add(newItemActivityDateTime);
-
-            // Add new activity to activityList maps of data from ArrayLists
-            Map<String,Object> listItemMap = new HashMap<>();
-            listItemMap.put("activityType", newItemActivityType);
-            listItemMap.put("activityStatNum", newItemActivityStatNum);
-            listItemMap.put("activityStatName", newItemActivityStatName);
-            listItemMap.put("activityDateTime", newItemActivityDateTime);
-            activityList.add(listItemMap);
-
-            // Update View
-            adapter.notifyDataSetChanged(); // restarts the process of getCount and getView
+            // Add new exercise
+            addExercise(newItemActivityType, newItemActivityStatNum, newItemActivityStatName, newItemActivityDateTime);
         }
     }
 
@@ -248,6 +275,43 @@ public class Exercise_Log extends AppCompatActivity {
                 , null);
         // Update View
         adapter.notifyDataSetChanged();
+    }
+
+    public void addExercise(String newItemActivityType, String newItemActivityStatNum, String newItemActivityStatName, String newItemActivityDateTime) {
+        // Store in database
+        ContentValues cValues = new ContentValues();
+        cValues.put(ExerciseLogDatabaseHelper.KEY_TYPE, newItemActivityType);
+        cValues.put(ExerciseLogDatabaseHelper.KEY_STAT_NUM, newItemActivityStatNum);
+        cValues.put(ExerciseLogDatabaseHelper.KEY_STAT_NAME, newItemActivityStatName);
+        cValues.put(ExerciseLogDatabaseHelper.KEY_DATE_TIME, newItemActivityDateTime);
+        db.insert(ExerciseLogDatabaseHelper.TABLE_NAME, "Not Given", cValues);
+
+        // Store in ArrayLists
+        activityType.add(newItemActivityType);
+        activityStatNum.add(newItemActivityStatNum);
+        activityStatName.add(newItemActivityStatName);
+        activityDateTime.add(newItemActivityDateTime);
+
+        // Add new activity to activityList maps of data from ArrayLists
+        Map<String,Object> listItemMap = new HashMap<>();
+        listItemMap.put("activityType", newItemActivityType);
+        listItemMap.put("activityStatNum", newItemActivityStatNum);
+        listItemMap.put("activityStatName", newItemActivityStatName);
+        listItemMap.put("activityDateTime", newItemActivityDateTime);
+        activityList.add(listItemMap);
+
+        // Update View
+        adapter.notifyDataSetChanged(); // restarts the process of getCount and getView
+    }
+
+    public void reinitFragment() {
+        if (fragmentExists) {
+            FragmentEmpty init = new FragmentEmpty();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.fragmentPanel, init);
+            ft.addToBackStack(null);
+            ft.commit();
+        }
     }
 }
 
