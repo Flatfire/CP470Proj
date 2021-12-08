@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cp470.healthyhawk" >
+    package="com.cp470.healthyhawk">
 
     <application
         android:allowBackup="true"
@@ -8,7 +8,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/healthyhawk_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.HealthyHawk" >
+        android:theme="@style/Theme.HealthyHawk">
+        <activity
+            android:name=".Add_New_Exercise"
+            android:exported="true"
+            android:label="@string/label_add_new_exercise"
+            android:parentActivityName=".Exercise_Log" />
         <activity
             android:name=".Login_Screen"
             android:exported="true"
@@ -42,7 +47,7 @@
         <activity
             android:name=".Main_Activity"
             android:exported="true"
-            android:theme="@style/Theme.HealthyHawk.NoActionBar" >
+            android:theme="@style/Theme.HealthyHawk.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

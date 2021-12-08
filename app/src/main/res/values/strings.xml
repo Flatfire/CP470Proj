@@ -47,6 +47,41 @@
         <item>Facility 3</item>
         <item>Facility 4</item>
     </string-array>
+    <string-array name="exerciseType">
+        <item>Walk</item>
+        <item>Jog</item>
+        <item>Run</item>
+        <item>Cycle</item>
+        <item>Swim</item>
+        <item>Bench Press</item>
+        <item>Chest Press</item>
+        <item>Dumbbell Bicep Curls</item>
+        <item>Hammer Curls</item>
+        <item>Dips</item>
+        <item>Rows</item>
+        <item>Deadlifts</item>
+        <item>Push-ups</item>
+        <item>Chin-ups</item>
+        <item>Pull-ups</item>
+        <item>Side Plank Hold</item>
+        <item>Plank Hold</item>
+        <item>Squats</item>
+        <item>Calf Raises</item>
+        <item>Knee Raises</item>
+        <item>Leg Raises</item>
+        <item>Lunges</item>
+    </string-array>
+    <string-array name="exerciseStatName">
+        <item>Km Travelled</item>
+        <item>Miles Travelled</item>
+        <item>Sets Completed</item>
+        <item>Reps Completed</item>
+        <item>Exercises Completed</item>
+        <item>Lbs Lifted</item>
+        <item>Kg Lifted</item>
+        <item>Calories Burned</item>
+        <item>Minutes</item>
+    </string-array>
 
     <!-- Unsorted, All Other Strings -->
     <string name="app_name">HealthyHawk</string>
@@ -105,4 +140,9 @@
     <string name="label_login_screen">Login</string>
     <string name="ButtonDelete">Delete</string>
     <string name="no_exercise_log_history">No exercise history found. Press \"+\" to add some!</string>
+    <string name="LabelExerciseType">Exercise Type</string>
+    <string name="LabelExerciseStatNum">Quantity</string>
+    <string name="LabelExerciseStatName">Unit</string>
+    <string name="label_add_new_exercise">Log New Exercise Activity</string>
+    <string name="no_quantity_entered">Please enter a quantity (field cannot be blank).</string>
 </resources>

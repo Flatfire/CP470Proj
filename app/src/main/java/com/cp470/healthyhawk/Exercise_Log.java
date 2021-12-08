@@ -2,6 +2,7 @@ package com.cp470.healthyhawk;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,14 +17,17 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cp470.healthyhawk.databinding.ActivityExerciseLogBinding;
 
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Exercise_Log extends AppCompatActivity {
@@ -39,6 +43,7 @@ public class Exercise_Log extends AppCompatActivity {
     Cursor cursor;
     SimpleAdapter adapter;
 
+    ArrayList<Map<String,Object>> activityList;
     ArrayList<String> activityType;
     ArrayList<String> activityStatNum;
     ArrayList<String> activityStatName;
@@ -52,14 +57,13 @@ public class Exercise_Log extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Setup fab
+        // Setup Fab to launch Add_New_Exercise Activity
         binding = ActivityExerciseLogBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         binding.fabAddExercise.setOnClickListener(view -> {
-            Intent intent = new Intent(Exercise_Log.this, Exercise_Log.class);
+            Intent intent = new Intent(Exercise_Log.this, Add_New_Exercise.class);
             startActivityForResult(intent, LAUNCH_NEW_EXERCISE);
         });
-
 
         // Init ArrayLists for activity data points
         activityType = new ArrayList<>();
@@ -102,22 +106,21 @@ public class Exercise_Log extends AppCompatActivity {
 
         listView = findViewById(R.id.listviewExerciseLog);
 
-        ArrayList<Map<String,Object>> activityList = new ArrayList<>();
+        // Display message if no reported activities
+        if (activityType.size() == 0) {
+            Snackbar.make(findViewById(R.id.layoutExerciseLog), getString(R.string.no_exercise_log_history), Snackbar.LENGTH_LONG)
+                    .setAction("No Exercise History", null).show();
+        }
 
-        // Fill map with data from ArrayLists
-        int len = activityType.size();
-        for(int i=0; i < len; i++) {
+        // Fill list with maps of data from ArrayLists
+        activityList = new ArrayList<>();
+        for(int i=0; i < activityType.size(); i++) {
             Map<String,Object> listItemMap = new HashMap<>();
             listItemMap.put("activityType", activityType.get(i));
             listItemMap.put("activityStatNum", activityStatNum.get(i));
             listItemMap.put("activityStatName", activityStatName.get(i));
             listItemMap.put("activityDateTime", activityDateTime.get(i));
             activityList.add(listItemMap);
-        }
-        // Display message if no reported activities
-        if (len == 0) {
-            Snackbar.make(findViewById(R.id.layoutExerciseLog), getString(R.string.no_exercise_log_history), Snackbar.LENGTH_LONG)
-                    .setAction("Display No Exercise Log History", null).show();
         }
 
         // Use SimpleAdapter to manage items
@@ -164,6 +167,7 @@ public class Exercise_Log extends AppCompatActivity {
     public void onActivityResult(int requestCode, int responseCode, Intent data) {
         super.onActivityResult(requestCode, responseCode, data);
         if(requestCode == LAUNCH_NEW_EXERCISE && responseCode == Activity.RESULT_OK) {
+            // After returning from Add New Exercise
             Log.i(ACTIVITY_NAME, "Returned to Exercise_Log.onActivityResult");
 
             // Get new exercise data
@@ -181,10 +185,18 @@ public class Exercise_Log extends AppCompatActivity {
             long insertId = db.insert(ExerciseLogDatabaseHelper.TABLE_NAME, "Not Given", cValues);
 
             // Store in ArrayLists
-            activityType.add(cursor.getString(indexType));
-            activityStatNum.add(cursor.getString(indexStatNum));
-            activityStatName.add(cursor.getString(indexStatName));
-            activityDateTime.add(cursor.getString(indexDateTime));
+            activityType.add(newItemActivityType);
+            activityStatNum.add(newItemActivityStatNum);
+            activityStatName.add(newItemActivityStatName);
+            activityDateTime.add(newItemActivityDateTime);
+
+            // Add new activity to activityList maps of data from ArrayLists
+            Map<String,Object> listItemMap = new HashMap<>();
+            listItemMap.put("activityType", newItemActivityType);
+            listItemMap.put("activityStatNum", newItemActivityStatNum);
+            listItemMap.put("activityStatName", newItemActivityStatName);
+            listItemMap.put("activityDateTime", newItemActivityDateTime);
+            activityList.add(listItemMap);
 
             // Update View
             adapter.notifyDataSetChanged(); // restarts the process of getCount and getView
@@ -200,3 +212,4 @@ public class Exercise_Log extends AppCompatActivity {
         super.onDestroy();
     }
 }
+
