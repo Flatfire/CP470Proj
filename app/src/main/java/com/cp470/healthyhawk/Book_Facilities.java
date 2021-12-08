@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -191,7 +192,7 @@ public class Book_Facilities extends AppCompatActivity {
                 Calendar c = Calendar.getInstance();
                 c.set(i,i1,i2);
                 bookDate = c.getTime();
-                bookCalendar.setDate(currentDate+1);
+                //bookCalendar.setDate(currentDate+1);
             }
         });
         bookingSubmit.setOnClickListener(new View.OnClickListener() {
@@ -199,11 +200,7 @@ public class Book_Facilities extends AppCompatActivity {
             public void onClick(View view) {
                 int nStartHour, nEndHour;
                 int nStartMin, nEndMin;
-                String bookBuilding = buildingSpinner.getSelectedItem().toString();
-                String bookFacility = facilitySpinner.getSelectedItem().toString();
-                String[] date = bookDate.toString().split(" ");
                 // DD MM YYYY
-                String bookDay = date[2] + " " + date[1] + " " + date[5];
                 // Create date format to be stored in database
                 String startTime = formatTime(pickStartHour.getSelectedItem().toString() , pickStartHalf.getSelectedItem().toString(), fromAmPm.toString());
                 String endTime = formatTime(pickEndHour.getSelectedItem().toString() , pickEndHalf.getSelectedItem().toString(), toAmPm.toString());
@@ -219,72 +216,8 @@ public class Book_Facilities extends AppCompatActivity {
                 if (nStartHour == nEndHour && nStartMin == nEndMin){ tooShort = true;}
                 else if (nStartHour > nEndHour){tooShort = true;}
                 if (!tooShort && !backToTheFuture) {
-                    db.child(bookBuilding).child("facility").child(bookFacility).child("bookings").child(bookDay).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DataSnapshot> task) {
-                            boolean bookingConflict = false;
-                            if (!task.isSuccessful()) {
-                                Log.e("firebase", "Error getting data", task.getException());
-                            } else {
-                                DataSnapshot snapshot = task.getResult();
-                                if (snapshot.hasChildren()) {
-                                    int startHour, nStartHour, endHour, nEndHour;
-                                    int endMin, nEndMin;
-                                    for (DataSnapshot Data : snapshot.getChildren()) {
-                                        // Set up time variables
-                                        startHour = Integer.parseInt(Data.child("startTime").getValue().toString().split(":")[0]);
-                                        nStartHour = Integer.parseInt(startTime.split(":")[0]);
-                                        endHour = Integer.parseInt(Data.child("endTime").getValue().toString().split(":")[0]);
-                                        nEndHour = Integer.parseInt(endTime.split(":")[0]);
-                                        endMin = Integer.parseInt(Data.child("endTime").getValue().toString().split(":")[1]);
-                                        nEndMin = Integer.parseInt(endTime.split(":")[1]);
-                                        // Check booking constraints
-                                        // Direct overlap check
-                                        if (nStartHour == startHour && nStartHour == endHour) {
-                                            if (nEndMin == endMin) {
-                                                bookingConflict = true;
-                                                break;
-                                            }
-                                        }
-                                        // Partial overlap checks
-                                        else if (nStartHour > startHour && nStartHour < endHour) {
-                                            bookingConflict = true;
-                                            break;
-                                        } else if (nEndHour < endHour && nEndHour > startHour) {
-                                            bookingConflict = true;
-                                            break;
-                                        }
-                                    }
-                                }
-                                if (!bookingConflict) {
-                                    // Push booking to facility
-                                    Booking newBooking = new Booking(startTime, endTime, email);
-                                    db.child(bookBuilding).child("facility").child(bookFacility).child("bookings").child(bookDay).push().setValue(newBooking);
+                    new book().execute();
 
-                                    // Display success/confirmation dialog
-                                    String veryNice = bookFacility +" booked successfully for "+bookDay+" from "+newBooking.startTime + " to " + newBooking.endTime;
-                                    AlertDialog.Builder greatSuccess = new AlertDialog.Builder(Book_Facilities.this);
-                                    greatSuccess.setTitle(R.string.BookingDialogSuccess)
-                                            .setMessage(veryNice);
-                                    greatSuccess.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                            finish();
-                                        }
-                                    });
-                                    greatSuccess.setNegativeButton("Book Another", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                        }
-                                    });
-                                    AlertDialog bookedDialog = greatSuccess.create();
-                                    bookedDialog.show();
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "The facility is unavailable at this time", Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        }
-                    });
                 }
                 else if (tooShort){
                     cliffBar = Snackbar.make(findViewById(R.id.bookingView),"End time must be at least 30 minutes later than start time", Snackbar.LENGTH_LONG);
@@ -308,4 +241,84 @@ public class Book_Facilities extends AppCompatActivity {
         }
         return fTime;
     }
-}
+
+    public class book extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            String bookBuilding = buildingSpinner.getSelectedItem().toString();
+            String bookFacility = facilitySpinner.getSelectedItem().toString();
+            String[] date = bookDate.toString().split(" ");
+            String bookDay = date[2] + " " + date[1] + " " + date[5];
+            String startTime = formatTime(pickStartHour.getSelectedItem().toString() , pickStartHalf.getSelectedItem().toString(), fromAmPm.toString());
+            String endTime = formatTime(pickEndHour.getSelectedItem().toString() , pickEndHalf.getSelectedItem().toString(), toAmPm.toString());
+            db.child(bookBuilding).child("facility").child(bookFacility).child("bookings").child(bookDay).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    boolean bookingConflict = false;
+                    if (!task.isSuccessful()) {
+                        Log.e("firebase", "Error getting data", task.getException());
+                    } else {
+                        DataSnapshot snapshot = task.getResult();
+                        if (snapshot.hasChildren()) {
+                            int startHour, nStartHour, endHour, nEndHour;
+                            int endMin, nEndMin;
+                            for (DataSnapshot Data : snapshot.getChildren()) {
+                                // Set up time variables
+                                startHour = Integer.parseInt(Data.child("startTime").getValue().toString().split(":")[0]);
+                                nStartHour = Integer.parseInt(startTime.split(":")[0]);
+                                endHour = Integer.parseInt(Data.child("endTime").getValue().toString().split(":")[0]);
+                                nEndHour = Integer.parseInt(endTime.split(":")[0]);
+                                endMin = Integer.parseInt(Data.child("endTime").getValue().toString().split(":")[1]);
+                                nEndMin = Integer.parseInt(endTime.split(":")[1]);
+                                // Check booking constraints
+                                // Direct overlap check
+                                if (nStartHour == startHour && nStartHour == endHour) {
+                                    if (nEndMin == endMin) {
+                                        bookingConflict = true;
+                                        break;
+                                    }
+                                }
+                                // Partial overlap checks
+                                else if (nStartHour > startHour && nStartHour < endHour) {
+                                    bookingConflict = true;
+                                    break;
+                                } else if (nEndHour < endHour && nEndHour > startHour) {
+                                    bookingConflict = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (!bookingConflict) {
+                            // Push booking to facility
+                            Booking newBooking = new Booking(startTime, endTime, email);
+                            db.child(bookBuilding).child("facility").child(bookFacility).child("bookings").child(bookDay).push().setValue(newBooking);
+
+                            // Display success/confirmation dialog
+                            String veryNice = bookFacility +" booked successfully for "+bookDay+" from "+newBooking.startTime + " to " + newBooking.endTime;
+                            AlertDialog.Builder greatSuccess = new AlertDialog.Builder(Book_Facilities.this);
+                            greatSuccess.setTitle(R.string.BookingDialogSuccess)
+                                    .setMessage(veryNice);
+                            greatSuccess.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    finish();
+                                }
+                            });
+                            greatSuccess.setNegativeButton("Book Another", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                }
+                            });
+                            AlertDialog bookedDialog = greatSuccess.create();
+                            bookedDialog.show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "The facility is unavailable at this time", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+            });
+            return null;
+            }
+
+        }
+    }
