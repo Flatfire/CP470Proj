@@ -15,6 +15,10 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+/**
+ * User introduction and local profile creation activity.
+ * Here, users add their personal information to be used in app activities
+ */
 public class User_Introduction extends AppCompatActivity {
     // Constants
     public static final int MIN_AGE = 13;

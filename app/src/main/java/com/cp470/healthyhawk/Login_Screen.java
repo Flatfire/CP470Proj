@@ -23,6 +23,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 
 public class Login_Screen extends AppCompatActivity {
+    /**
+     * Prep layout for login screen and set listeners for login interface
+     * @param savedInstanceState Contains any extras or data passed to the activity
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
@@ -33,13 +37,9 @@ public class Login_Screen extends AppCompatActivity {
         final EditText password = findViewById(R.id.bookingPassword);
         Button returnLogin = findViewById(R.id.returnLogin);
         TextView infoMessage = findViewById(R.id.loginMessage);
+
         // Login verification
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new getLoginData().execute();
-            }
-        });
+        login.setOnClickListener(view -> new getLoginData().execute());
 
         register.setOnClickListener( view -> {
             if (login.getVisibility() == View.VISIBLE){
@@ -54,11 +54,9 @@ public class Login_Screen extends AppCompatActivity {
                 } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches()) {
                     Toast.makeText(Login_Screen.this, "Invalid email address", Toast.LENGTH_LONG).show();
                 } else {
-                    register.setOnClickListener(new View.OnClickListener() {
-                        //Clicking button calls AsyncTask retreval task
-                        @Override
-                        public void onClick(View view) {new getRegistrationData().execute();}
-                    });
+                    //Clicking button calls AsyncTask retrieval task
+                    register.setOnClickListener(view1 -> new getRegistrationData().execute());
+
                 }
             }
         });
@@ -70,14 +68,17 @@ public class Login_Screen extends AppCompatActivity {
     }
 
     public class getLoginData extends AsyncTask<Void, Void, Void> {
+        /**
+         * Background retrieval and validation of user login data from Firebase RTDB
+         * @param voids
+         * @return
+         */
         @Override
         protected Void doInBackground(Void... voids) {
             DatabaseReference db = FirebaseDatabase.getInstance().getReference();
             final EditText email = findViewById(R.id.bookingEmail);
             final EditText password = findViewById(R.id.bookingPassword);
-            db.child("Booking_Profile").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DataSnapshot> task) {
+            db.child("Booking_Profile").get().addOnCompleteListener(task -> {
                     if (!task.isSuccessful()) {
                         Log.e("firebase", "Error getting data", task.getException());
                     } else {
@@ -106,13 +107,17 @@ public class Login_Screen extends AppCompatActivity {
                             Toast.makeText(Login_Screen.this, "Password incorrect or User nonexistent", Toast.LENGTH_LONG).show();
                         }
                     }
-                }
             });
             return null;
         }
     }
 
     private class getRegistrationData extends AsyncTask<Void, Void, Void>{
+        /**
+         * Background retrieval of user registration data for validation and sanity checks
+         * @param voids
+         * @return
+         */
         @Override
         protected Void doInBackground(Void... voids) {
             DAOprofile dao = new DAOprofile();
@@ -123,9 +128,7 @@ public class Login_Screen extends AppCompatActivity {
             Button returnLogin = findViewById(R.id.returnLogin);
             TextView infoMessage = findViewById(R.id.loginMessage);
             DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-            db.child("Booking_Profile").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DataSnapshot> task) {
+            db.child("Booking_Profile").get().addOnCompleteListener(task -> {
                     if (!task.isSuccessful()) {
                         Log.e("firebase", "Error getting data", task.getException());
                     } else {
@@ -157,7 +160,6 @@ public class Login_Screen extends AppCompatActivity {
                             Toast.makeText(Login_Screen.this, "User already exists", Toast.LENGTH_LONG).show();
                         }
                     }
-                }
             });
 
             return null;

@@ -21,6 +21,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+/**
+ * Profile creator class used to generate new booking profiles based on user input and
+ * existing data from Firebase RTDB
+ */
 public class Profile_Creator extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,48 +35,41 @@ public class Profile_Creator extends AppCompatActivity {
         final EditText password = findViewById(R.id.confirmPassword);
         DAOprofile dao = new DAOprofile();
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Retrieve booking profiles
-                db.child("Booking_Profile").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        if (!task.isSuccessful()) {
-                            Log.e("firebase", "Error getting data", task.getException());
+        // Sets actions for the registration button when activated
+        registerButton.setOnClickListener(view -> {
+            // Retrieve booking profiles
+            db.child("Booking_Profile").get().addOnCompleteListener(task -> {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    // Check if user already exists
+                    boolean registered = false;
+                    DataSnapshot snapshot = task.getResult();
+                    for(DataSnapshot Data: snapshot.getChildren() ) {
+                        Booking_Profile info = Data.getValue(Booking_Profile.class);
+                        String text = info.getEmail();
+                        if (text.equals(email.getText().toString())) {
+                            registered = true;
+                            break;
                         }
-                        else {
-                            // Check if user already exists
-                            boolean registered = false;
-                            DataSnapshot snapshot = task.getResult();
-                            for(DataSnapshot Data: snapshot.getChildren() ) {
-                                Booking_Profile info = Data.getValue(Booking_Profile.class);
-                                String text = info.getEmail();
-                                if (text.equals(email.getText().toString())) {
-                                    registered = true;
-                                    break;
-                                }
-                                else{
-                                    registered = false;
-                                }
-                            }
-                            // Register user if account does not exist
-                            if (!registered) {
-                                Booking_Profile bookingProfile = new Booking_Profile(email.getText().toString(), password.getText().toString());
-                                dao.add(bookingProfile);
-                                Intent intent = new Intent(Profile_Creator.this, Login_Screen.class);
-                                startActivityForResult(intent, 10);
-                            }
-                            // Inform user if they already have an account
-                            else {
-                                Toast.makeText(Profile_Creator.this, "User already exists", Toast.LENGTH_LONG).show();
-                            }
+                        else{
+                            registered = false;
                         }
-
                     }
-                });
-            }
+                    // Register user if account does not exist
+                    if (!registered) {
+                        Booking_Profile bookingProfile = new Booking_Profile(email.getText().toString(), password.getText().toString());
+                        dao.add(bookingProfile);
+                        Intent intent = new Intent(Profile_Creator.this, Login_Screen.class);
+                        startActivityForResult(intent, 10);
+                    }
+                    // Inform user if they already have an account
+                    else {
+                        Toast.makeText(Profile_Creator.this, "User already exists", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
         });
 
     }

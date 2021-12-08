@@ -53,6 +53,10 @@ public class Weight_Log extends AppCompatActivity {
     ArrayList<DataPoint> weightDataPoints;
     LineGraphSeries<DataPoint> weightSeries;
 
+    /**
+     * Set layout and implement UI element handlers
+     * @param savedInstanceState
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weight_log);
@@ -124,6 +128,10 @@ public class Weight_Log extends AppCompatActivity {
         db.close();
     }
 
+    /**
+     * Set graph layout and load data from local database
+     * Queries the local SQLite database to retrieve existing weight data
+     */
     private void setupGraphView() {
         // Set up graph title
         weightProgressChart.setTitle(getString(R.string.WeightChartTitle));
@@ -178,6 +186,10 @@ public class Weight_Log extends AppCompatActivity {
         weightProgressChart.getViewport().scrollToEnd(); // show most recent 14 weight logs
     }
 
+    /**
+     * Takes new weight value and adds it to the array of datapoints to be displayed by the graph
+     * @param weight New weight datapoint input by user
+     */
     private void updateGraphView(String weight) {
         // Take input and add it to the arraylist of datapoints
         double weightInput = Double.parseDouble(weight);
@@ -189,6 +201,10 @@ public class Weight_Log extends AppCompatActivity {
         weightProgressChart.getViewport().scrollToEnd(); // call it again to properly render
     }
 
+    /**
+     * Updates current weight value in local prefs and displays up to date weight value to user
+     * @param weight New current weight as input by user
+     */
     private void updateCurrentWeight(String weight) {
         // Update the TextView
         String weightString = weight + " " + mPrefs.getString(key_weight_unit, "");
@@ -215,6 +231,10 @@ public class Weight_Log extends AppCompatActivity {
         updateGraphView(weight);
     }
 
+    /**
+     * Sets new goal weight to be displayed in graph
+     * @param goalWeight new goal weight value as input by the user
+     */
     private void updateGoalWeight(String goalWeight) {
         // Update the TextView
         String goalWeightString = goalWeight + " " + mPrefs.getString(key_weight_unit, "");

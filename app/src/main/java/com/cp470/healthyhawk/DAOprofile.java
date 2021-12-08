@@ -5,6 +5,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+/**
+ * Direct access object for booking profiles
+ * Used to get and add booking profiles to the Firebase RTDB
+ */
 public class DAOprofile {
 
     private DatabaseReference Reference;
