@@ -39,7 +39,7 @@ public class Add_New_Exercise extends AppCompatActivity {
             if (!textViewQuantity.getText().toString().equals("")) {
                 // Get current Date and Time
                 Calendar calendar = Calendar.getInstance();
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("KK:mm aaa E, LLL. d, yyyy");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("KK:mm aaa E, LLL d, yyyy");
 
                 // Get data values
                 String activityType = spinnerType.getSelectedItem().toString();

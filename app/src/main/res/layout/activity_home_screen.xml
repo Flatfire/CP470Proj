@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
+        android:theme="@style/Theme.HealthyHawk.ToolbarMenu"
         android:elevation="4dp"
         app:layout_constraintBottom_toTopOf="@+id/layoutHomePage"
         app:layout_constraintEnd_toEndOf="parent"

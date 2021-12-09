@@ -31,12 +31,12 @@
         <item>Prefer not to say</item>
     </string-array>
     <string-array name="HeightUnits">
-        <item>cm</item>
         <item>\"</item>
+        <item>cm</item>
     </string-array>
     <string-array name="WeightUnits">
-        <item>kg</item>
         <item>lb</item>
+        <item>kg</item>
     </string-array>
     <string-array name="AmPm">
         <item>AM</item>
