@@ -17,13 +17,12 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
-
-import com.cp470.healthyhawk.databinding.ActivityExerciseLogBinding;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +39,7 @@ public class Exercise_Log extends AppCompatActivity {
     SQLiteDatabase db;
     Cursor cursor;
     SimpleAdapter adapter;
+    FloatingActionButton fabAddExercise;
 
     ArrayList<Map<String,Object>> activityList;
     ArrayList<String> activityType;
@@ -58,9 +58,7 @@ public class Exercise_Log extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Bind for fab
-        ActivityExerciseLogBinding binding = ActivityExerciseLogBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_exercise_log);
 
         // Check if Fragment exists
         fragmentPanel = findViewById(R.id.fragmentPanel);
@@ -110,7 +108,8 @@ public class Exercise_Log extends AppCompatActivity {
         cursor.close();
 
         // Setup Fab to launch Add_New_Exercise Activity
-        binding.fabAddExercise.setOnClickListener(view -> {
+        fabAddExercise = findViewById(R.id.fabAddExercise);
+        fabAddExercise.setOnClickListener(view -> {
             if (fragmentExists) {
                 // Call constructor
                 FragmentNewExercise newExercise = new FragmentNewExercise(Exercise_Log.this);
