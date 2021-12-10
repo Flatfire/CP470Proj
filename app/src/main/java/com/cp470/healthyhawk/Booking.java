@@ -1,5 +1,9 @@
 package com.cp470.healthyhawk;
 
+/**
+ * Booking class to hold and store booking data
+ * Used to push new booking data to firebase
+ */
 public class Booking {
     String startTime;
     String endTime;

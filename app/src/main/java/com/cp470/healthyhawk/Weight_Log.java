@@ -112,9 +112,15 @@ public class Weight_Log extends AppCompatActivity {
 
             builder.setView(goalWeightDialog);
             builder.setPositiveButton(R.string.LogWeightDialogSave, (dialog, id) -> {
-                dialog.dismiss();
+
                 EditText userGoalWeightEditText = goalWeightDialog.findViewById(R.id.dialogUserGoalWeightInput);
-                updateGoalWeight(userGoalWeightEditText.getText().toString());
+                if (Integer.parseInt(userGoalWeightEditText.getText().toString()) > 0) {
+                    dialog.dismiss();
+                    updateGoalWeight(userGoalWeightEditText.getText().toString());
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"Weight cannot be negative.", Toast.LENGTH_LONG).show();
+                }
             });
             builder.setNegativeButton(R.string.LogWeightDialogCancel, (dialog, id) -> dialog.cancel());
             builder.show();
